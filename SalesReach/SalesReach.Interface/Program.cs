@@ -1,3 +1,4 @@
+using Microsoft.OpenApi.Models;
 using SalesReach.Infra.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
