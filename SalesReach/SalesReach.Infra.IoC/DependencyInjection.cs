@@ -21,6 +21,8 @@ namespace SalesReach.Infra.IoC
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IPessoaService, PessoaService>();
             services.AddTransient<IPessoaRepository, PessoaRepository>();
+            services.AddTransient<IPessoaDocumentoService, PessoaDocumentoService>();
+            services.AddTransient<IPessoaDocumentoRepository, PessoaDocumentoRepository>();
 
             services.AddFluentValidationAutoValidation();
         }

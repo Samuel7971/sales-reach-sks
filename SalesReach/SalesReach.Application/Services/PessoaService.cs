@@ -58,7 +58,6 @@ namespace SalesReach.Application.Services
             pessoa.Atualizar(pessoa.Id, pessoa.Nome, pessoa.PessoaTipoId, pessoa.DataNascimento, ativo);
 
             return await _pessoaRepository.AtualizarAsync(pessoa);
-
         }
     }
 }
