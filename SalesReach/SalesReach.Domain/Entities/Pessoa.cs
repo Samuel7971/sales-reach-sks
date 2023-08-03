@@ -69,17 +69,6 @@ namespace SalesReach.Domain.Entities
             Ativo = ativo;
         }
 
-        public void Inativar(int id, bool ativo)
-        {
-            Id = id;
-            Ativo = ativo;
-        }
-
-        public void Buscar(int id)
-        {
-            Id = id;
-        }
-
         private static string ToStringPessoaTipo(int pessoaTipoId)
             => pessoaTipoId == (int)PessoaTipo.Juridica ? PessoaTipo.Juridica.DisplayName() : PessoaTipo.Fisica.DisplayName();
 
