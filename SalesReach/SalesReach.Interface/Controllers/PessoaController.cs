@@ -22,8 +22,8 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> BuscarTodasAsync()
         {
-            var retorno = await _pessoaService.BuscarTodosAsync();
-            return retorno.Any() ? ResponseOk(retorno) : ResponseNotFound("Erro ao buscar lista de Pessoas."); 
+            var response = await _pessoaService.BuscarTodosAsync();
+            return response.Any() ? ResponseOk(response) : ResponseNotFound("Erro ao buscar lista de Pessoas."); 
         }
 
         [HttpGet("{id:int}")]
@@ -32,8 +32,8 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> BuscarPorIdAsync(int id)
         {
-            var retorno = await _pessoaService.BuscarPorIdAsync(id);
-            return retorno is not null ? ResponseOk(retorno) : ResponseNotFound("Id não localizada.");
+            var response = await _pessoaService.BuscarPorIdAsync(id);
+            return response is not null ? ResponseOk(response) : ResponseNotFound("Pessoa não localizada.");
         }
 
         [HttpGet("{nome}")]
@@ -42,8 +42,8 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> BuscarPorNomeAsync(string nome)
         {
-            var retorno = await _pessoaService.BuscarPorNomeAsync(nome);
-            return retorno is not null ? ResponseOk(retorno) : ResponseNotFound("Nome não localizado.");
+            var response = await _pessoaService.BuscarPorNomeAsync(nome);
+            return response is not null ? ResponseOk(response) : ResponseNotFound("Nome não localizado.");
         }
 
         [HttpPost()]
@@ -76,8 +76,8 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> VerificarSeExisteAsync(int id)
         {
-            var retorno = await _pessoaService.VerificarSeExisteAsync(id);
-            return retorno ? ResponseNoContent() : ResponseNotFound();
+            var response = await _pessoaService.VerificarSeExisteAsync(id);
+            return response ? ResponseNoContent() : ResponseNotFound();
         }
 
         [HttpPatch("{id}/{ativo}")]

@@ -23,6 +23,8 @@ namespace SalesReach.Infra.IoC
             services.AddTransient<IPessoaRepository, PessoaRepository>();
             services.AddTransient<IPessoaDocumentoService, PessoaDocumentoService>();
             services.AddTransient<IPessoaDocumentoRepository, PessoaDocumentoRepository>();
+            services.AddTransient<IEnderecoService, EnderecoService>();
+            services.AddTransient<IEnderecoRepository, EnderecoRepository>();
 
             services.AddFluentValidationAutoValidation();
         }
