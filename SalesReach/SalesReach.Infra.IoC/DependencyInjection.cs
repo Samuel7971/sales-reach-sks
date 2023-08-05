@@ -1,8 +1,10 @@
-﻿using FluentValidation.AspNetCore;
+﻿using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SalesReach.Application.Models;
 using SalesReach.Application.Services;
 using SalesReach.Application.Services.Interfaces;
+using SalesReach.Application.Validations;
 using SalesReach.Domain.Repositories;
 using SalesReach.Infra.Data;
 using SalesReach.Infra.Data.Repositories;
@@ -28,7 +30,12 @@ namespace SalesReach.Infra.IoC
             services.AddTransient<IPessoaContatoService, PessoaContatoService>();
             services.AddTransient<IPessoaContatoRepository, PessoaContatoRepository>();
 
-            services.AddFluentValidationAutoValidation();
+            #region .: FluentValidator :.
+            services.AddTransient<IValidator<PessoaModel>, PessoaValidator>();
+            services.AddTransient<IValidator<PessoaContatoModel>, PessoaContatoValidator>();
+            services.AddTransient<IValidator<EnderecoModel>, EnderecoValidator>();
+            services.AddTransient<IValidator<PessoaDocumentoModel>, PessoaDocumentoValidator>();
+            #endregion
         }
     }
 }

@@ -1,5 +1,7 @@
+using FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
 using SalesReach.Infra.IoC;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 

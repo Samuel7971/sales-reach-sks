@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using SalesReach.Application.Models;
 using SalesReach.Application.Services;
 using SalesReach.Application.Services.Interfaces;
@@ -12,9 +13,11 @@ namespace SalesReach.Interface.Controllers
     public class PessoaContatoController : APIControllers
     {
         private readonly IPessoaContatoService _pessoaContatoService;
-        public PessoaContatoController(IPessoaContatoService pessoaContatoService)
+        private readonly IValidator<PessoaContatoModel> _pessoaContatoValidator;
+        public PessoaContatoController(IPessoaContatoService pessoaContatoService, IValidator<PessoaContatoModel> pessoaContatoValidator)
         {
             _pessoaContatoService = pessoaContatoService;
+            _pessoaContatoValidator = pessoaContatoValidator;
         }
 
         [HttpGet()]
@@ -33,6 +36,8 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> BuscarPorIdAsync(int id)
         {
+            if (id <= 0) return ResponseBadRequest();
+
             var response = await _pessoaContatoService.BuscarPorIdAsync(id);
             return response is not null ? ResponseOk(response) : ResponseNotFound("Contato não localizada.");
         }
@@ -43,6 +48,8 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> BuscarPorNumeroAsync(string numero)
         {
+            if (string.IsNullOrEmpty(numero)) return ResponseBadRequest();
+
             var response = await _pessoaContatoService.BuscarPorNumeroAsync(numero);
             return response is not null ? ResponseOk(response) : ResponseNotFound("Contato não localizada.");
         }
@@ -53,6 +60,8 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> BuscarPorEmailAsync(string email)
         {
+            if (string.IsNullOrEmpty(email)) return ResponseBadRequest();
+
             var response = await _pessoaContatoService.BuscarPorEmailAsync(email);
             return response is not null ? ResponseOk(response) : ResponseNotFound("E-mail não localizado.");
         }
@@ -63,7 +72,10 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> InserirAsync(PessoaContatoModel contatoModel)
         {
-            if (!ModelState.IsValid) return ResponseBadRequest();
+            var modelValidator = _pessoaContatoValidator.Validate(contatoModel);
+
+            if (!modelValidator.IsValid) 
+                return BadRequest(modelValidator.Errors);
 
             var response = await _pessoaContatoService.InserirAsync(contatoModel);
             return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir novo Contatos.");
@@ -75,7 +87,10 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AtualizarAsync(PessoaContatoModel contatoModel)
         {
-            if (ModelState.IsValid) return ResponseBadRequest();
+            var modelValidator = _pessoaContatoValidator.Validate(contatoModel);
+
+            if (!modelValidator.IsValid)
+                return BadRequest(modelValidator.Errors);
 
             var response = await _pessoaContatoService.AtualizarAsync(contatoModel);
             return response > 0 ? ResponseNoContent() : ResponseBadRequest("Erro ao atualizar Contatos.");

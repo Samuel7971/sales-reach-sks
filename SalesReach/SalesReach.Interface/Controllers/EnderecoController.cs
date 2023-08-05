@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using SalesReach.Application.Models;
 using SalesReach.Application.Services;
 using SalesReach.Application.Services.Interfaces;
+using SalesReach.Application.Validations;
 using SalesReach.Domain.Entities;
 using SalesReach.Interface.Attributes;
 using SalesReach.Interface.Controllers.Shared;
@@ -13,9 +15,11 @@ namespace SalesReach.Interface.Controllers
     public class EnderecoController : APIControllers
     {
         private readonly IEnderecoService _enderecoService;
-        public EnderecoController(IEnderecoService enderecoService)
+        private readonly IValidator<EnderecoModel> _enderecoValidator;
+        public EnderecoController(IEnderecoService enderecoService, IValidator<EnderecoModel> enderecoValidator)
         {
             _enderecoService = enderecoService;
+            _enderecoValidator = enderecoValidator;
         }
 
         [HttpGet()]
@@ -64,7 +68,10 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AtualizarAsync(EnderecoModel enderecoModel)
         {
-            if (!ModelState.IsValid) return ResponseBadRequest();
+            var modelValidator = _enderecoValidator.Validate(enderecoModel);
+
+            if (!modelValidator.IsValid)
+                return BadRequest(modelValidator.Errors);
 
             var response = await _enderecoService.AtualizarAsync(enderecoModel);    
             return response > 0 ? ResponseNoContent() : ResponseBadRequest("Erro ao atualizar Endereço.");
@@ -76,7 +83,10 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> InserirAsync(EnderecoModel enderecoModel)
         {
-            if (!ModelState.IsValid) return ResponseBadRequest();
+            var modelValidator = _enderecoValidator.Validate(enderecoModel);
+
+            if (!modelValidator.IsValid)
+                return BadRequest(modelValidator.Errors);
 
             var response = await _enderecoService.InserirAsync(enderecoModel);
             return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir novo Endereço.");

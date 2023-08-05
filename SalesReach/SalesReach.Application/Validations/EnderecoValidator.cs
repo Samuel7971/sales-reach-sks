@@ -13,7 +13,7 @@ namespace SalesReach.Application.Validations
         public EnderecoValidator()
         {
             RuleFor(x => x.PessoaId)
-                .LessThanOrEqualTo(0).WithMessage("PessoaId é requerido.");
+                .GreaterThan(0).WithMessage("PessoaId é requerido.");
             RuleFor(x => x.CEP)
                 .NotEmpty().NotNull().WithMessage("CEP é requerido.")
                 .Length(8).WithMessage("CEP informado é inválido.");

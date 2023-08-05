@@ -50,7 +50,7 @@ namespace SalesReach.Infra.Data.Repositories
                          	  , Email
                          	  , DataCadastro 
                          FROM FitCard_Gestao..PessoaContato_Samuel
-                         WHERE Email = @id";
+                         WHERE Id = @id";
             return await _session.Connection.QueryFirstAsync<PessoaContato>(sql, new { id });
         }
 
@@ -64,7 +64,7 @@ namespace SalesReach.Infra.Data.Repositories
                          	  , Email
                          	  , DataCadastro 
                          FROM FitCard_Gestao..PessoaContato_Samuel
-                         WHERE Email = @numero";
+                         WHERE Telefone = @numero";
             return await _session.Connection.QueryFirstAsync<PessoaContato>(sql, new { numero });
         }
 
@@ -73,7 +73,7 @@ namespace SalesReach.Infra.Data.Repositories
             var sql = $@"UPDATE FitCard_Gestao..PessoaContato_Samuel
                              SET TelefoneTipoId = @TelefoneTipoId ,Telefone = @Telefone ,Email = @Email
                          FROM PessoaContato_Samuel
-                         WHERE Id = @Id";
+                         WHERE Id = @Id AND PessoaId = @PessoaId";
             return await _session.Connection.ExecuteAsync(sql, pessoaContato);
         }
 

@@ -55,13 +55,14 @@ namespace SalesReach.Domain.Entities
 
         public void Atualizar(int id, int pessoaId, int telefoneTipoId, string telefone, string email)
         {
-            if (id <= 0)
+            if (id != 0 && pessoaId != 0)
             {
                 IsValidoContato(pessoaId, telefoneTipoId, telefone, email);
 
                 Id = id;
                 PessoaId = pessoaId;
                 TelefoneTipoId = telefoneTipoId;
+                Telefone = telefone;
                 Email = email;
             }
         }

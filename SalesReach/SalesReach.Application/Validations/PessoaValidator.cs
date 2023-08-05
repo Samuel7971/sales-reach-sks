@@ -15,7 +15,7 @@ namespace SalesReach.Application.Validations
                 .ExclusiveBetween(1, 2).WithMessage("Tipo Pessoa não cadastrado.");
             RuleFor(x => x.DataNascimento)
                 .NotNull().WithMessage($"Data Nascimento é requerido.")
-                .LessThan(DateTime.Now.AddYears(-16)).WithMessage("Pessoa menor que 16 anos");
+                .GreaterThan(DateTime.Now.AddYears(-16)).WithMessage("Pessoa menor que 16 anos");
         }
     }
 }

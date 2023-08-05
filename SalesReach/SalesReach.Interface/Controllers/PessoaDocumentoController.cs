@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using SalesReach.Application.Models;
 using SalesReach.Application.Services.Interfaces;
 using SalesReach.Interface.Attributes;
@@ -11,9 +12,11 @@ namespace SalesReach.Interface.Controllers
     public class PessoaDocumentoController : APIControllers
     {
         private readonly IPessoaDocumentoService _documentoService;
-        public PessoaDocumentoController(IPessoaDocumentoService documentoService)
+        private readonly IValidator<PessoaDocumentoModel> _pessoaDocumentoValidator;
+        public PessoaDocumentoController(IPessoaDocumentoService documentoService, IValidator<PessoaDocumentoModel> pessoaDocumentoValidator)
         {
             _documentoService = documentoService;
+            _pessoaDocumentoValidator = pessoaDocumentoValidator;
         }
 
         [HttpGet("{id:int}")]
@@ -42,7 +45,10 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AtualizarAsync(PessoaDocumentoModel documentoModel)
         {
-            if (!ModelState.IsValid) return ResponseBadRequest();
+            var modelValidator = _pessoaDocumentoValidator.Validate(documentoModel);
+
+            if (!modelValidator.IsValid)
+                return BadRequest(modelValidator.Errors);
 
             var response = await _documentoService.AtualizarAsync(documentoModel);
             return response > 0 ? ResponseNoContent() : ResponseNotFound("Erro ao atualizar Documento.");
@@ -54,7 +60,10 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> InserirAsync(PessoaDocumentoModel documentoModel)
         {
-            if (!ModelState.IsValid) return BadRequest();
+            var modelValidator = _pessoaDocumentoValidator.Validate(documentoModel);
+
+            if (!modelValidator.IsValid)
+                return BadRequest(modelValidator.Errors);
 
             var response = await _documentoService.InserirAsync(documentoModel);
             return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir novo Documento.");

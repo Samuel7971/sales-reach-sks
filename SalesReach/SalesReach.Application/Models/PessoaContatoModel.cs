@@ -4,12 +4,12 @@ namespace SalesReach.Application.Models
 {
     public class PessoaContatoModel : IPessoaContato
     {
-        public int Id { get; private set; }
-        public int PessoaId { get; private set; }
-        public int TelefoneTipoId { get; private set; }
-        public string Telefone { get; private set; }
-        public string Email { get; private set; }
-        public DateTime DataCadastro { get; private set; }
+        public int Id { get; set; }
+        public int PessoaId { get; set; }
+        public int TelefoneTipoId { get; set; }
+        public string Telefone { get; set; }
+        public string Email { get; set; }
+        public DateTime DataCadastro { get; set; }
 
         public PessoaContatoModel() { }
 
