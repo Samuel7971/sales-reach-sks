@@ -59,10 +59,10 @@ namespace SalesReach.Domain.Entities
         private void IsValidoEndereco(int id, int pessoaId, string cep, string logradouro, string numero, string complemento, string bairro, string localidade, string uf)
         {
             DomainValidationException.When(pessoaId == 0, "PessoaId é requerido.");
-            DomainValidationException.When(cep is not null && cep.Length == 8, "CEP informado é inválido.");
-            DomainValidationException.When(logradouro is not null, "Logradouro não pode ser nulo.");
-            DomainValidationException.When(numero is not null, "Número não pode ser nulo.");
-            DomainValidationException.When(bairro is not null, "Bairro não pode ser nulo.");
+            DomainValidationException.When(cep is null || cep.Length < 8, "CEP informado é inválido.");
+            DomainValidationException.When(logradouro is null, "Logradouro não pode ser nulo.");
+            DomainValidationException.When(numero is null, "Número não pode ser nulo.");
+            DomainValidationException.When(bairro is null, "Bairro não pode ser nulo.");
             DomainValidationException.When(uf.Length != 2, "UF informado é inválido.");
         }
 

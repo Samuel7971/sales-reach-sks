@@ -26,7 +26,6 @@ namespace SalesReach.Application.Validations
             RuleFor(x => x.UF)
                 .NotNull().NotEmpty().WithMessage("UF informado é inválido.")
                 .Length(2).WithMessage("UF informado é inválido.");
-
         }
     }
 }

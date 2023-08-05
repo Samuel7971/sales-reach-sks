@@ -106,8 +106,7 @@ namespace SalesReach.Infra.Data.Repositories
         public async Task<int> InserirAsync(Endereco endereco)
         {
             var sql = $@"INSERT INTO Endereco_Samuel 
-                                (Id
-                                 ,CEP
+                                (CEP
                                  ,Logradouro
                                  ,Numero
                                  ,Complemento
@@ -116,8 +115,7 @@ namespace SalesReach.Infra.Data.Repositories
                                  ,UF
                                  ,PessoaId
                                  ,DataCadastro)
-                          VALUES(@Id
-                                 ,@CEP
+                          VALUES(@CEP
                                  ,@Logradouro
                                  ,@Numero
                                  ,@Complemento
