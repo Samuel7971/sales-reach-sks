@@ -16,7 +16,7 @@ namespace SalesReach.Domain.Entities
         public int PessoaTipoId { get; private set; }
         public DateTime DataNascimento { get; private set; }
         public bool Ativo { get; private set; }
-        public DateTime DataCadastro { get; set; } = DateTime.Now;
+        public DateTime DataCadastro { get; private set; } = DateTime.Now;
 
         public Pessoa() { }
 

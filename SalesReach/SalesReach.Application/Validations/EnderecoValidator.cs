@@ -12,10 +12,20 @@ namespace SalesReach.Application.Validations
     {
         public EnderecoValidator()
         {
+            RuleFor(x => x.PessoaId)
+                .LessThanOrEqualTo(0).WithMessage("PessoaId é requerido.");
             RuleFor(x => x.CEP)
                 .NotEmpty().NotNull().WithMessage("CEP é requerido.")
-                .MaximumLength(8).WithMessage("CEP informado é inválido.")
-                .MinimumLength(8).WithMessage("CEP informado é inválido.");
+                .Length(8).WithMessage("CEP informado é inválido.");
+            RuleFor(x => x.Logradouro)
+                .NotNull().NotEmpty().WithMessage("Logradouro é requerido.");
+            RuleFor(x => x.Numero)
+                .NotNull().NotEmpty().WithMessage("Número é requerido.");
+            RuleFor(X => X.Bairro)
+                .NotEmpty().NotNull().WithMessage("Bairro é requerido.");
+            RuleFor(x => x.UF)
+                .NotNull().NotEmpty().WithMessage("UF informado é inválido.")
+                .Length(2).WithMessage("UF informado é inválido.");
 
         }
     }

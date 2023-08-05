@@ -12,6 +12,11 @@ namespace SalesReach.Application.Validations
     {
         public PessoaDocumentoValidator()
         {
+            RuleFor(x => x.Id)
+                .NotNull().WithMessage("Id é requerido.")
+                .LessThanOrEqualTo(0).WithMessage("Id informado é inválido.");
+            RuleFor(x => x.DocumentoTipoId)
+                .LessThanOrEqualTo(0).WithMessage("Tipo Documento é requerido.");
             RuleFor(x => x.NumeroDocumento)
                 .NotEmpty().NotNull().WithMessage("Número do documento é requerido.");
         }
