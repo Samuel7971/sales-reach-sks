@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
+﻿using SalesReach.Domain.Validations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SalesReach.Domain.Entities.Interface;
-using SalesReach.Domain.Validations;
 
 namespace SalesReach.Domain.Entities
 {
     [Table("Endereco_Samuel")]
-    public class Endereco : IEndereco
+    public class Endereco : Base
     {
-        [Key]
-        public int Id { get; private set; }
         public int PessoaId { get; private set; }
         public string CEP { get; private set; }
         public string Logradouro { get; private set; }
@@ -24,7 +14,6 @@ namespace SalesReach.Domain.Entities
         public string Bairro { get; private set; }
         public string Localidade { get; private set; }
         public string UF { get; private set; }
-        public DateTime DataCadastro { get; private set; }
 
         public Endereco() { }
 
@@ -41,22 +30,7 @@ namespace SalesReach.Domain.Entities
             UF = uf;
         }
 
-        public Endereco(IEndereco endereco)
-        {
-            IsValidoEndereco(endereco.Id, endereco.PessoaId, endereco.CEP, endereco.Logradouro, endereco.Numero, endereco.Complemento, endereco.Bairro, endereco.Localidade, endereco.UF);
-            Id = endereco.Id;
-            PessoaId = endereco.PessoaId;
-            CEP = endereco.CEP;
-            Logradouro= endereco.Logradouro;
-            Numero = endereco.Numero;
-            Complemento = endereco.Complemento;
-            Bairro= endereco.Bairro;
-            Localidade= endereco.Localidade;
-            UF = endereco.UF;
-            DataCadastro = DateTime.Now;
-        }
-
-        private void IsValidoEndereco(int id, int pessoaId, string cep, string logradouro, string numero, string complemento, string bairro, string localidade, string uf)
+        private void IsValidoEndereco(int pessoaId, string cep, string logradouro, string numero, string complemento, string bairro, string localidade, string uf)
         {
             DomainValidationException.When(pessoaId == 0, "PessoaId é requerido.");
             DomainValidationException.When(cep is null || cep.Length < 8, "CEP informado é inválido.");
@@ -66,9 +40,21 @@ namespace SalesReach.Domain.Entities
             DomainValidationException.When(uf.Length != 2, "UF informado é inválido.");
         }
 
+        public void Inserir(int pessoaId, string cep, string logradouro, string numero, string complemento, string bairro, string localidade, string uf)
+        {
+            IsValidoEndereco(pessoaId, cep, logradouro, numero, complemento, bairro, localidade, uf);
+            PessoaId = pessoaId;
+            CEP = cep;
+            Logradouro = logradouro;
+            Numero = numero;
+            Complemento = complemento;
+            Bairro = bairro;
+            UF = uf;
+        }
+
         public void Atualizar(int id, int pessoaId, string cep, string logradouro, string numero, string complemento, string bairro, string localidade, string uf)
         {
-            IsValidoEndereco(id, pessoaId, cep, logradouro, numero, complemento, bairro, localidade, uf);
+            IsValidoEndereco(pessoaId, cep, logradouro, numero, complemento, bairro, localidade, uf);
 
             Id = id;
             PessoaId = pessoaId;

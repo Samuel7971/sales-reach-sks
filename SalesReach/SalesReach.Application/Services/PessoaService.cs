@@ -1,32 +1,31 @@
-﻿using SalesReach.Application.Models;
+﻿using AutoMapper;
+using SalesReach.Application.Models;
 using SalesReach.Application.Services.Interfaces;
 using SalesReach.Domain.Entities;
-using SalesReach.Domain.Entities.Interface;
 using SalesReach.Domain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SalesReach.Application.Services
 {
     public class PessoaService : IPessoaService
     {
         private readonly IPessoaRepository _pessoaRepository;
+        private readonly IMapper _mapper;
 
-        public PessoaService(IPessoaRepository pessoaRepository)
+        public PessoaService(IPessoaRepository pessoaRepository, IMapper mapper)
         {
             _pessoaRepository = pessoaRepository;
         }
 
-        public async Task<IEnumerable<IPessoa>> BuscarTodosAsync() => await _pessoaRepository.BuscarTodosAsync();
+        public async Task<IEnumerable<PessoaModel>> BuscarTodosAsync() 
+            => _mapper.Map<IEnumerable<PessoaModel>>(await _pessoaRepository.BuscarTodosAsync());
       
-        public async Task<IPessoa> BuscarPorIdAsync(int id) => await _pessoaRepository.BuscarPorIdAsync(id);
+        public async Task<PessoaModel> BuscarPorIdAsync(int id) 
+            => _mapper.Map<PessoaModel>(await _pessoaRepository.BuscarPorIdAsync(id));
  
-        public async Task<IPessoa> BuscarPorNomeAsync(string nome) => await _pessoaRepository.BuscarPorNomeAsync(nome);
+        public async Task<PessoaModel> BuscarPorNomeAsync(string nome)
+            => _mapper.Map<PessoaModel>(await _pessoaRepository.BuscarPorNomeAsync(nome));
  
-        public async Task<int> AtualizarAsync(IPessoa pessoaModel)
+        public async Task<int> AtualizarAsync(PessoaModel pessoaModel)
         {
             var pessoa = await _pessoaRepository.BuscarPorIdAsync(pessoaModel.Id);
 
@@ -35,10 +34,11 @@ namespace SalesReach.Application.Services
             return await _pessoaRepository.AtualizarAsync(pessoa);
         }
 
-        public async Task<int> InserirAsync(IPessoa pessoaModel)
+        public async Task<int> InserirAsync(PessoaModel pessoaModel)
         {
-            var pessoa = new Pessoa(pessoaModel);
+            var pessoa = new Pessoa();
 
+            pessoa.Inserir(pessoaModel.Nome, pessoaModel.PessoaTipoId, pessoaModel.DataNascimento, pessoaModel.Ativo);
             return await _pessoaRepository.InserirAsync(pessoa);
         }
 

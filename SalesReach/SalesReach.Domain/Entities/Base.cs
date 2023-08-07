@@ -2,7 +2,7 @@
 
 namespace SalesReach.Domain.Entities
 {
-    public class Base
+    public abstract class Base
     {
         [Key]
         public int Id { get; set; }

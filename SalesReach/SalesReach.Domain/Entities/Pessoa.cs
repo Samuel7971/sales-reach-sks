@@ -1,5 +1,4 @@
-﻿using SalesReach.Domain.Entities.Interface;
-using SalesReach.Domain.Enums;
+﻿using SalesReach.Domain.Enums;
 using SalesReach.Domain.Enums.Extensions;
 using SalesReach.Domain.Validations;
 using System.ComponentModel.DataAnnotations;
@@ -8,15 +7,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SalesReach.Domain.Entities
 {
     [Table("Pessoa_Samuel")]
-    public class Pessoa : IPessoa
+    public class Pessoa : Base
     {
         [Key]
-        public int Id { get; private set; }
         public string Nome { get; private set; }
         public int PessoaTipoId { get; private set; }
         public DateTime DataNascimento { get; private set; }
+        public PessoaDocumento Dcoumento { get; private set; }
+        public PessoaContato Contato { get; private set; }
+        public Endereco Endereco { get; private set; }
         public bool Ativo { get; private set; }
-        public DateTime DataCadastro { get; private set; } = DateTime.Now;
 
         public Pessoa() { }
 
@@ -30,18 +30,6 @@ namespace SalesReach.Domain.Entities
             DataCadastro = dataCadastro;
         }
 
-        public Pessoa(IPessoa pessoa)
-        {
-            IsValidaPessoa(pessoa.Nome, pessoa.PessoaTipoId, pessoa.DataNascimento);
-
-            Id = pessoa.Id;
-            Nome = pessoa.Nome;
-            PessoaTipoId = pessoa.PessoaTipoId;
-            DataNascimento = pessoa.DataNascimento;
-            Ativo = true;
-            DataCadastro = pessoa.DataCadastro;
-        }
-
         private void IsValidaPessoa(string nome, int pessoaTipoId, DateTime dataNascimento)
         {
             DomainValidationException.When(string.IsNullOrEmpty(nome), "Nome deve ser informado.");
@@ -50,12 +38,22 @@ namespace SalesReach.Domain.Entities
         }
 
         public static implicit operator string(Pessoa pessoa)
-            => $"{pessoa.Id}, {pessoa.Nome}, {ToStringPessoaTipo(pessoa.PessoaTipoId)}, {pessoa.DataCadastro}, {ToStringAtivo(pessoa.Ativo)}";
+            => $"{pessoa.Id}, {pessoa.Nome}, {ToStringPessoaTipo(pessoa.PessoaTipoId)}, {pessoa.DataNascimento}, {pessoa.Dcoumento}, {pessoa.Contato}, {pessoa.Endereco}, {pessoa.DataCadastro}, {ToStringAtivo(pessoa.Ativo)}";
 
         public static implicit operator Pessoa(string pessoa)
         {
             var data = pessoa.Split(',');
             return new Pessoa(id: int.Parse(data[0]), nome: data[1], pessoaTipoId: int.Parse(data[2]), dataNascimento: DateTime.Parse(data[3]), ativo: bool.Parse(data[4]), dataCadastro: DateTime.Parse(data[5]));
+        }
+
+        public void Inserir(string nome, int pessoaTipoId, DateTime dataNascimento, bool ativo)
+        {
+            IsValidaPessoa(nome, pessoaTipoId, dataNascimento);
+            Id = 0;
+            Nome = nome;
+            PessoaTipoId = pessoaTipoId;
+            DataNascimento = dataNascimento;
+            Ativo = ativo;
         }
 
         public void Atualizar(int id, string nome, int pessoaTipoId, DateTime dataNascimento, bool ativo)

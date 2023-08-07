@@ -1,26 +1,15 @@
-﻿using SalesReach.Domain.Entities.Interface;
-
-namespace SalesReach.Application.Models
+﻿namespace SalesReach.Application.Models
 {
-    public class PessoaModel : IPessoa
+    public class PessoaModel 
     {
         public int Id { get; set; }
         public string Nome { get; set; }
         public int PessoaTipoId { get; set; }
         public DateTime DataNascimento { get; set; }
+        public PessoaDocumentoModel Dcoumento { get; set; }
+        public PessoaContatoModel Contato { get; set; }
+        public EnderecoModel Endereco { get; set; }
         public bool Ativo { get; set; }
         public DateTime DataCadastro { get; set; }
-
-        public PessoaModel() { }
-
-        public PessoaModel(IPessoa pessoa)
-        {
-            Id = pessoa.Id;
-            Nome = pessoa.Nome;
-            PessoaTipoId = pessoa.PessoaTipoId;
-            DataNascimento = pessoa.DataNascimento;
-            Ativo = pessoa.Ativo;
-            DataCadastro = pessoa.DataCadastro;
-        }
     }
 }

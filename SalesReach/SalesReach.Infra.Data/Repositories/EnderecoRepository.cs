@@ -1,13 +1,6 @@
 ﻿using Dapper;
 using SalesReach.Domain.Entities;
-using SalesReach.Domain.Entities.Interface;
 using SalesReach.Domain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SalesReach.Infra.Data.Repositories
 {

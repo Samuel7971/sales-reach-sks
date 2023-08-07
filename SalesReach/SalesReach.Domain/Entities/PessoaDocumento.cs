@@ -1,5 +1,4 @@
-﻿using SalesReach.Domain.Entities.Interface;
-using SalesReach.Domain.Enums;
+﻿using SalesReach.Domain.Enums;
 using SalesReach.Domain.Enums.Extensions;
 using SalesReach.Domain.Validations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SalesReach.Domain.Entities
 {
     [Table("PessoaDocumento_Samuel")]
-    public class PessoaDocumento : Base, IPessoaDocumento
+    public class PessoaDocumento : Base
     {
         public int DocumentoTipoId { get; set; }
         public string NumeroDocumento { get; set; }
@@ -21,16 +20,6 @@ namespace SalesReach.Domain.Entities
             Id = id;
             DocumentoTipoId = documentoTipoId;
             NumeroDocumento = numeroDocumento;
-        }
-
-        public PessoaDocumento(IPessoaDocumento documento)
-        {
-            IsValidoDocumento(documento.Id, documento.DocumentoTipoId, documento.NumeroDocumento);
-
-            Id = documento.Id;
-            DocumentoTipoId = documento.DocumentoTipoId;
-            NumeroDocumento = documento.NumeroDocumento;
-            DataCadastro = documento.DataCadastro;
         }
 
         private void IsValidoDocumento(int id, int documentoTipoId, string numeroDocumento)
@@ -49,6 +38,15 @@ namespace SalesReach.Domain.Entities
         {
             string[] data = documento.Split(',');
             return new PessoaDocumento(id: int.Parse(data[0]), documentoTipoId: IntParseTipoDocumento(data[1]), numeroDocumento: data[2]);
+        }
+
+        public void Inserir(int id, int documentoTipoId, string numeroDocumento)
+        {
+            IsValidoDocumento(id, documentoTipoId, numeroDocumento);
+
+            Id = id;
+            DocumentoTipoId = documentoTipoId;
+            NumeroDocumento = numeroDocumento;
         }
 
         public void Atualizar(int id, int documentoTipoId, string numeroDocumento)

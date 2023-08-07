@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SalesReach.Application.Mappings;
 using SalesReach.Application.Models;
 using SalesReach.Application.Services;
 using SalesReach.Application.Services.Interfaces;
@@ -20,6 +21,8 @@ namespace SalesReach.Infra.IoC
         {
             services.Configure<DataBaseSettings>(x => configuration.GetSection("DefaultConnection").Bind(x));
             services.AddScoped<DbSession>();
+            services.AddAutoMapper(typeof(DomainToModel));
+            services.AddAutoMapper(typeof(ModelToDomain));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IPessoaService, PessoaService>();
             services.AddTransient<IPessoaRepository, PessoaRepository>();

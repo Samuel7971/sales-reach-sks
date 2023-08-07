@@ -1,8 +1,6 @@
-﻿using SalesReach.Domain.Entities.Interface;
-
-namespace SalesReach.Application.Models
+﻿namespace SalesReach.Application.Models
 {
-    public class PessoaContatoModel : IPessoaContato
+    public class PessoaContatoModel 
     {
         public int Id { get; set; }
         public int PessoaId { get; set; }
@@ -10,17 +8,5 @@ namespace SalesReach.Application.Models
         public string Telefone { get; set; }
         public string Email { get; set; }
         public DateTime DataCadastro { get; set; }
-
-        public PessoaContatoModel() { }
-
-        public PessoaContatoModel(IPessoaContato contato)
-        {
-            Id = contato.Id;
-            PessoaId = contato.PessoaId;
-            TelefoneTipoId = contato.TelefoneTipoId;
-            Telefone = contato.Telefone;
-            Email = contato.Email;
-            DataCadastro = contato.DataCadastro;
-        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using SalesReach.Domain.Entities.Interface;
-using SalesReach.Domain.Enums.Extensions;
+﻿using SalesReach.Domain.Enums.Extensions;
 using SalesReach.Domain.Validations;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,7 +7,7 @@ using System.Text.RegularExpressions;
 namespace SalesReach.Domain.Entities
 {
     [Table("PessoaContato_Samuel")]
-    public class PessoaContato : IPessoaContato
+    public class PessoaContato 
     {
         [Key]
         public int Id { get; private set; }
@@ -16,7 +15,7 @@ namespace SalesReach.Domain.Entities
         public int TelefoneTipoId { get; private set; }
         public string Telefone { get; private set; }
         public string Email { get; private set; }
-        public DateTime DataCadastro { get; private set; }
+        public DateTime DataCadastro { get; private set; } = DateTime.Now;
 
         public PessoaContato() { }
 
@@ -32,18 +31,6 @@ namespace SalesReach.Domain.Entities
             DataCadastro = dataCadastro;
         }
 
-        public PessoaContato(IPessoaContato pessoaContato)
-        {
-            IsValidoContato(pessoaContato.PessoaId, pessoaContato.TelefoneTipoId, pessoaContato.Telefone, pessoaContato.Email);
-
-            Id = pessoaContato.Id;
-            PessoaId = pessoaContato.PessoaId;
-            TelefoneTipoId = pessoaContato.TelefoneTipoId;
-            Telefone = pessoaContato.Telefone;
-            Email = pessoaContato.Email;
-            DataCadastro = pessoaContato.DataCadastro;
-        }
-
         public void IsValidoContato(int pessoaId, int telefoneTipoId, string telefone, string email)
         {
             DomainValidationException.When(pessoaId <= 0, "PessoaId deve ser informado.");
@@ -51,6 +38,17 @@ namespace SalesReach.Domain.Entities
             DomainValidationException.When(string.IsNullOrEmpty(telefone), "Telefone deve ser informado.");
             DomainValidationException.When(string.IsNullOrEmpty(email), "E-mail deve ser informado.");
             DomainValidationException.When(!IsValidoEmail(email), "E-mail é inválido.");
+        }
+
+        public void Inserri(int pessoaId, int telefoneTipoId, string telefone, string email)
+        {
+            IsValidoContato(pessoaId, telefoneTipoId, telefone, email);
+
+            PessoaId = pessoaId;
+            TelefoneTipoId = telefoneTipoId;
+            Telefone = telefone;
+            Email = email;
+            DataCadastro = DateTime.Now;
         }
 
         public void Atualizar(int id, int pessoaId, int telefoneTipoId, string telefone, string email)

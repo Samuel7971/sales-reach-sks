@@ -1,13 +1,13 @@
-﻿using SalesReach.Domain.Entities.Interface;
+﻿using SalesReach.Application.Models;
 
 namespace SalesReach.Application.Services.Interfaces
 {
     public interface IPessoaDocumentoService
     {
-        Task<IPessoaDocumento> BuscarPorIdAsync(int id);
-        Task<IPessoaDocumento> BuscarPorNumeroAsync(string numeroDocumento);
-        Task<int> InserirAsync(IPessoaDocumento documento);
-        Task<int> AtualizarAsync(IPessoaDocumento documento);
+        Task<PessoaDocumentoModel> BuscarPorIdAsync(int id);
+        Task<PessoaDocumentoModel> BuscarPorNumeroAsync(string numeroDocumento);
+        Task<int> InserirAsync(PessoaDocumentoModel documento);
+        Task<int> AtualizarAsync(PessoaDocumentoModel documento);
         Task<bool> VerificarSeExisteAsync(int id);
     }
 }

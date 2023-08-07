@@ -19,6 +19,10 @@ namespace SalesReach.Interface.Controllers
             _pessoaValidator = pessoaValidator;
         }
 
+        /// <summary>
+        /// Buscar todo registro de Pessoa
+        /// </summary>
+        /// <returns></returns>
         [HttpGet()]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
@@ -29,6 +33,11 @@ namespace SalesReach.Interface.Controllers
             return response.Any() ? ResponseOk(response) : ResponseNotFound("Erro ao buscar lista de Pessoas."); 
         }
 
+        /// <summary>
+        /// Buscar por Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id:int}")]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
@@ -39,6 +48,11 @@ namespace SalesReach.Interface.Controllers
             return response is not null ? ResponseOk(response) : ResponseNotFound("Pessoa não localizada.");
         }
 
+        /// <summary>
+        /// Buscar Por nome
+        /// </summary>
+        /// <param name="nome"></param>
+        /// <returns></returns>
         [HttpGet("{nome}")]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
@@ -49,6 +63,11 @@ namespace SalesReach.Interface.Controllers
             return response is not null ? ResponseOk(response) : ResponseNotFound("Nome não localizado.");
         }
 
+        /// <summary>
+        /// Inserir nova Pessoa
+        /// </summary>
+        /// <param name="pessoaModel"></param>
+        /// <returns></returns>
         [HttpPost()]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
@@ -64,6 +83,11 @@ namespace SalesReach.Interface.Controllers
             return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir novo Pessoa.");
         }
 
+        /// <summary>
+        /// Atualizar Pessoa
+        /// </summary>
+        /// <param name="pessoaModel"></param>
+        /// <returns></returns>
         [HttpPut()]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
@@ -79,6 +103,11 @@ namespace SalesReach.Interface.Controllers
             return response > 0 ? ResponseNoContent() : ResponseBadRequest("Erro ao atualizar pessoa.");
         }
 
+        /// <summary>
+        /// Verificar se existe Pessoa
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpHead("{id}")]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
@@ -89,6 +118,12 @@ namespace SalesReach.Interface.Controllers
             return response ? ResponseNoContent() : ResponseNotFound();
         }
 
+        /// <summary>
+        /// Ativar ou Inativar Pessoa
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="ativo"></param>
+        /// <returns></returns>
         [HttpPatch("{id}/{ativo}")]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
