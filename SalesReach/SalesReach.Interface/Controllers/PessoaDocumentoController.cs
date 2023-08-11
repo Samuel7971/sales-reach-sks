@@ -12,11 +12,11 @@ namespace SalesReach.Interface.Controllers
     public class PessoaDocumentoController : APIControllers
     {
         private readonly IPessoaDocumentoService _documentoService;
-        private readonly IValidator<PessoaDocumentoModel> _pessoaDocumentoValidator;
-        public PessoaDocumentoController(IPessoaDocumentoService documentoService, IValidator<PessoaDocumentoModel> pessoaDocumentoValidator)
+        private readonly IValidator<PessoaDocumentoModel> _documentoValidator;
+        public PessoaDocumentoController(IPessoaDocumentoService documentoService, IValidator<PessoaDocumentoModel> documentoValidator)
         {
             _documentoService = documentoService;
-            _pessoaDocumentoValidator = pessoaDocumentoValidator;
+            _documentoValidator = documentoValidator;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace SalesReach.Interface.Controllers
         public async Task<IActionResult> BuscaTodosAsync()
         {
             var response = await _documentoService.BuscarTodosAsync();
-            return response.Any() ? ResponseOk(response) : ResponseNotFound("Documento não encontrado.");
+            return response.Any() ? ResponseOk(response) : ResponseNotFound("Documentos não encontrado.");
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AtualizarAsync(PessoaDocumentoModel documentoModel)
         {
-            var modelValidator = _pessoaDocumentoValidator.Validate(documentoModel);
+            var modelValidator = _documentoValidator.Validate(documentoModel);
 
             if (!modelValidator.IsValid)
                 return BadRequest(modelValidator.Errors);
@@ -94,7 +94,7 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> InserirAsync(PessoaDocumentoModel documentoModel)
         {
-            var modelValidator = _pessoaDocumentoValidator.Validate(documentoModel);
+            var modelValidator = _documentoValidator.Validate(documentoModel);
 
             if (!modelValidator.IsValid)
                 return BadRequest(modelValidator.Errors);

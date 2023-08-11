@@ -8,36 +8,36 @@ namespace SalesReach.Application.Services
 {
     public class PessoaDocumentoService : IPessoaDocumentoService
     {
-        private readonly IPessoaDocumentoRepository _pessoaDocumentoRepository;
+        private readonly IPessoaDocumentoRepository _documentoRepository;
         private readonly IMapper _mapper;
 
-        public PessoaDocumentoService(IPessoaDocumentoRepository pessoaDocumentoRepository, IMapper mapper)
+        public PessoaDocumentoService(IPessoaDocumentoRepository documentoRepository, IMapper mapper)
         {
-            _pessoaDocumentoRepository = pessoaDocumentoRepository;
+            _documentoRepository = documentoRepository;
             _mapper = mapper;
         }
 
         public async Task<IEnumerable<PessoaDocumentoModel>> BuscarTodosAsync() 
         {
-            return _mapper.Map<IEnumerable<PessoaDocumentoModel>>(await _pessoaDocumentoRepository.BuscarTodosAsync());
+            return _mapper.Map<IEnumerable<PessoaDocumentoModel>>(await _documentoRepository.BuscarTodosAsync());
         }
 
         public async Task<PessoaDocumentoModel> BuscarPorIdAsync(int id)
-            => _mapper.Map<PessoaDocumentoModel>(await _pessoaDocumentoRepository.BuscarPorIdAsync(id));
+            => _mapper.Map<PessoaDocumentoModel>(await _documentoRepository.BuscarPorIdAsync(id));
 
         public async Task<PessoaDocumentoModel> BuscarPorNumeroAsync(string numeroDocumento)
-            => _mapper.Map<PessoaDocumentoModel>(await _pessoaDocumentoRepository.BuscarPorNumeroAsync(numeroDocumento));
+            => _mapper.Map<PessoaDocumentoModel>(await _documentoRepository.BuscarPorNumeroAsync(numeroDocumento));
 
         public async Task<int> AtualizarAsync(PessoaDocumentoModel documentoModel)
         {
-            var documento = await _pessoaDocumentoRepository.BuscarPorIdAsync(documentoModel.Id);
+            var documento = await _documentoRepository.BuscarPorIdAsync(documentoModel.Id);
 
             if (documento is null)
                 return 0;
 
             documento.Atualizar(documentoModel.Id, documentoModel.DocumentoTipoId, documentoModel.NumeroDocumento);
 
-            return await _pessoaDocumentoRepository.AtualizarAsync(documento);
+            return await _documentoRepository.AtualizarAsync(documento);
         }
 
         public async Task<int> InserirAsync(PessoaDocumentoModel documentoModel)
@@ -46,12 +46,12 @@ namespace SalesReach.Application.Services
 
             documento.Inserir(documentoModel.Id, documentoModel.DocumentoTipoId, documentoModel.NumeroDocumento);
 
-            return await _pessoaDocumentoRepository.InserirAsync(documento);
+            return await _documentoRepository.InserirAsync(documento);
         }
 
         public async Task<bool> VerificarSeExisteAsync(int id)
         {
-            var retorno = await _pessoaDocumentoRepository.BuscarPorIdAsync(id);
+            var retorno = await _documentoRepository.BuscarPorIdAsync(id);
             return retorno is not null;
         }
     }

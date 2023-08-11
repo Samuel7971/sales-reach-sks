@@ -1,25 +1,30 @@
 ﻿using SalesReach.Domain.Enums;
 using SalesReach.Domain.Enums.Extensions;
 using SalesReach.Domain.Validations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SalesReach.Domain.Entities
 {
     [Table("PessoaDocumento_Samuel")]
-    public class PessoaDocumento : Base
+    public class PessoaDocumento 
     {
+        [Key]
+        public int Id { get; set; }
         public int DocumentoTipoId { get; set; }
         public string NumeroDocumento { get; set; }
+        public DateTime DataCadastro { get; private set; } = DateTime.Now;
 
         public PessoaDocumento() { }
 
-        public PessoaDocumento(int id, int documentoTipoId, string numeroDocumento)
+        public PessoaDocumento(int id, int documentoTipoId, string numeroDocumento, DateTime dataCadastro)
         {
             IsValidoDocumento(id, documentoTipoId, numeroDocumento);
 
             Id = id;
             DocumentoTipoId = documentoTipoId;
             NumeroDocumento = numeroDocumento;
+            DataCadastro = dataCadastro;
         }
 
         private void IsValidoDocumento(int id, int documentoTipoId, string numeroDocumento)
@@ -37,7 +42,7 @@ namespace SalesReach.Domain.Entities
         public static implicit operator PessoaDocumento(string documento)
         {
             string[] data = documento.Split(',');
-            return new PessoaDocumento(id: int.Parse(data[0]), documentoTipoId: IntParseTipoDocumento(data[1]), numeroDocumento: data[2]);
+            return new PessoaDocumento(id: int.Parse(data[0]), documentoTipoId: IntParseTipoDocumento(data[1]), numeroDocumento: data[2], dataCadastro: DateTime.Parse(data[3]));
         }
 
         public void Inserir(int id, int documentoTipoId, string numeroDocumento)
