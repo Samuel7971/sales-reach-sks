@@ -17,6 +17,11 @@ namespace SalesReach.Application.Services
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<PessoaDocumentoModel>> BuscarTodosAsync() 
+        {
+            return _mapper.Map<IEnumerable<PessoaDocumentoModel>>(await _pessoaDocumentoRepository.BuscarTodosAsync());
+        }
+
         public async Task<PessoaDocumentoModel> BuscarPorIdAsync(int id)
             => _mapper.Map<PessoaDocumentoModel>(await _pessoaDocumentoRepository.BuscarPorIdAsync(id));
 

@@ -13,6 +13,7 @@ namespace SalesReach.Domain.Repositories
         Task<PessoaContato> BuscarPorIdAsync(int id);
         Task<PessoaContato> BuscarPorNumeroAsync(string numero);
         Task<PessoaContato> BuscarPorEmailAsync(string email);
+        Task<PessoaContato> BuscarPorPessoaIdAsync(int pessoaId);
         Task<int> AtualizarAsync(PessoaContato pessoaContato);
         Task<int> InserirAsync(PessoaContato pessoaContato);
     }

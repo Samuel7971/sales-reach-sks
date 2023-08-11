@@ -7,6 +7,7 @@ namespace SalesReach.Domain.Repositories
         Task<IEnumerable<Endereco>> BuscarTodosAsync();
         Task<Endereco> BuscarPorIdAsync(int id);
         Task<Endereco> BuscarPorCEPAsync(string cep);
+        Task<Endereco> BuscarPorPessoaIdAsync(int pessoaId);
         Task<IEnumerable<Endereco>> BuscarPorLogradouroAsync(string logradouro);
         Task<int> AtualizarAsync(Endereco endereco);
         Task<int> InserirAsync(Endereco endereco);

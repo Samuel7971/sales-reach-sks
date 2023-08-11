@@ -12,6 +12,14 @@ namespace SalesReach.Infra.Data.Repositories
             _session = session;
         }
 
+        public async Task<IEnumerable<PessoaDocumento>> BuscarTodosAsync()
+        {
+            var sql = $@"SELECT Id, DocumentoTipoId, NumeroDocumento, DataCadastro
+                                  FROM FitCard_Gestao..PessoaDocumento_Samuel";
+
+            return await _session.Connection.QueryAsync<PessoaDocumento>(sql);
+        }
+
         public async Task<PessoaDocumento> BuscarPorIdAsync(int id)
         {
             var sql = $@"SELECT Id, DocumentoTipoId, NumeroDocumento, DataCadastro

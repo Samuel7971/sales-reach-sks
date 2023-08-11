@@ -20,7 +20,7 @@ namespace SalesReach.Application.Mappings
 
             #region .: Documento Mapping :.
             CreateMap<PessoaDocumentoModel, PessoaDocumento>();
-
+            CreateMap<IEnumerable<PessoaDocumentoModel>, IEnumerable<PessoaDocumento>>();
             #endregion
 
             #region .: Contato Mapping :.

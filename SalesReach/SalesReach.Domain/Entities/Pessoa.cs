@@ -9,13 +9,9 @@ namespace SalesReach.Domain.Entities
     [Table("Pessoa_Samuel")]
     public class Pessoa : Base
     {
-        [Key]
         public string Nome { get; private set; }
         public int PessoaTipoId { get; private set; }
         public DateTime DataNascimento { get; private set; }
-        public PessoaDocumento Dcoumento { get; private set; }
-        public PessoaContato Contato { get; private set; }
-        public Endereco Endereco { get; private set; }
         public bool Ativo { get; private set; }
 
         public Pessoa() { }
@@ -38,7 +34,7 @@ namespace SalesReach.Domain.Entities
         }
 
         public static implicit operator string(Pessoa pessoa)
-            => $"{pessoa.Id}, {pessoa.Nome}, {ToStringPessoaTipo(pessoa.PessoaTipoId)}, {pessoa.DataNascimento}, {pessoa.Dcoumento}, {pessoa.Contato}, {pessoa.Endereco}, {pessoa.DataCadastro}, {ToStringAtivo(pessoa.Ativo)}";
+            => $"{pessoa.Id}, {pessoa.Nome}, {ToStringPessoaTipo(pessoa.PessoaTipoId)}, {pessoa.DataNascimento}, {pessoa.DataCadastro}, {ToStringAtivo(pessoa.Ativo)}";
 
         public static implicit operator Pessoa(string pessoa)
         {
@@ -49,6 +45,7 @@ namespace SalesReach.Domain.Entities
         public void Inserir(string nome, int pessoaTipoId, DateTime dataNascimento, bool ativo)
         {
             IsValidaPessoa(nome, pessoaTipoId, dataNascimento);
+
             Id = 0;
             Nome = nome;
             PessoaTipoId = pessoaTipoId;

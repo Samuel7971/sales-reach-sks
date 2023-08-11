@@ -29,6 +29,9 @@ namespace SalesReach.Application.Services
         public async Task<PessoaContatoModel> BuscarPorNumeroAsync(string numero) 
             => _mapper.Map<PessoaContatoModel>(await _contatoRepository.BuscarPorNumeroAsync(numero));
 
+        public async Task<PessoaContatoModel> BuscarPorPessoaIdAsync(int pessoaId)
+            => _mapper.Map<PessoaContatoModel>(await _contatoRepository.BuscarPorPessoaIdAsync(pessoaId));
+
 
         public async Task<int> AtualizarAsync(PessoaContatoModel contatoModel)
         {

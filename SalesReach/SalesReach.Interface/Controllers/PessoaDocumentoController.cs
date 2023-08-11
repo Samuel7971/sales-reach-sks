@@ -19,6 +19,25 @@ namespace SalesReach.Interface.Controllers
             _pessoaDocumentoValidator = pessoaDocumentoValidator;
         }
 
+        /// <summary>
+        /// Buscar todos os Documentos
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet()]
+        [CustomResponse(StatusCodes.Status200OK)]
+        [CustomResponse(StatusCodes.Status400BadRequest)]
+        [CustomResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> BuscaTodosAsync()
+        {
+            var response = await _documentoService.BuscarTodosAsync();
+            return response.Any() ? ResponseOk(response) : ResponseNotFound("Documento não encontrado.");
+        }
+
+        /// <summary>
+        /// Buscar por Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id:int}")]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
@@ -29,6 +48,11 @@ namespace SalesReach.Interface.Controllers
             return response is not null ? ResponseOk(response) : ResponseNotFound("Documento não encontrado.");
         }
 
+        /// <summary>
+        /// Buscar por número documento
+        /// </summary>
+        /// <param name="numero"></param>
+        /// <returns></returns>
         [HttpGet("{numero}")]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
@@ -39,6 +63,11 @@ namespace SalesReach.Interface.Controllers
             return response is not null ? ResponseOk(response) : ResponseNotFound("Documento não encontrado.");
         }
 
+        /// <summary>
+        /// Atualizar Documento
+        /// </summary>
+        /// <param name="documentoModel"></param>
+        /// <returns></returns>
         [HttpPut()]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
@@ -54,6 +83,11 @@ namespace SalesReach.Interface.Controllers
             return response > 0 ? ResponseNoContent() : ResponseNotFound("Erro ao atualizar Documento.");
         }
 
+        /// <summary>
+        /// Inserir novo documento
+        /// </summary>
+        /// <param name="documentoModel"></param>
+        /// <returns></returns>
         [HttpPost()]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
@@ -69,6 +103,11 @@ namespace SalesReach.Interface.Controllers
             return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir novo Documento.");
         }
 
+        /// <summary>
+        /// Verificar se existe por Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpHead("{id}")]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status204NoContent)]

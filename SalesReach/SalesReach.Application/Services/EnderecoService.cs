@@ -22,6 +22,9 @@ namespace SalesReach.Application.Services
         public async Task<EnderecoModel> BuscarPorIdAsync(int id) 
             => _mapper.Map<EnderecoModel>(await _enderecoRespository.BuscarPorIdAsync(id));
 
+        public async Task<EnderecoModel> BuscarPorPessoaIdAsync(int pessoaId)
+            => _mapper.Map<EnderecoModel>(await _enderecoRespository.BuscarPorPessoaIdAsync(pessoaId));
+
         public async Task<IEnumerable<EnderecoModel>> BuscarPorLogradouroAsync(string logradouro) 
             => _mapper.Map<IEnumerable<EnderecoModel>>(await _enderecoRespository.BuscarPorLogradouroAsync(logradouro));
 

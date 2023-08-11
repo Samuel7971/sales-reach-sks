@@ -8,6 +8,7 @@ namespace SalesReach.Application.Services.Interfaces
         Task<PessoaContatoModel> BuscarPorIdAsync(int id);
         Task<PessoaContatoModel> BuscarPorNumeroAsync(string numero);
         Task<PessoaContatoModel> BuscarPorEmailAsync(string email);
+        Task<PessoaContatoModel> BuscarPorPessoaIdAsync(int pessoaId);
         Task<int> AtualizarAsync(PessoaContatoModel pessoaContato);
         Task<int> InserirAsync(PessoaContatoModel pessoaContato);
     }

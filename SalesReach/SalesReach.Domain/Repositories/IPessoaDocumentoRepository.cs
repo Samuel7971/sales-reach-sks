@@ -4,6 +4,7 @@ namespace SalesReach.Domain.Repositories
 {
     public interface IPessoaDocumentoRepository
     {
+        Task<IEnumerable<PessoaDocumento>> BuscarTodosAsync();
         Task<PessoaDocumento> BuscarPorIdAsync(int id);
         Task<int> InserirAsync(PessoaDocumento documento);
         Task<PessoaDocumento> BuscarPorNumeroAsync(string numeroDocumento);
