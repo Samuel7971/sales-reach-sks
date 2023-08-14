@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using SalesReach.Application.Models;
+using SalesReach.Application.Models.InserirModels;
+using SalesReach.Application.Models.ResponseModels;
 using SalesReach.Application.Services.Interfaces;
 using SalesReach.Domain.Entities;
 using SalesReach.Domain.Repositories;
+using SalesReach.Domain.Repositories.UnitOfWork.Interface;
 
 namespace SalesReach.Application.Services
 {
@@ -12,14 +15,16 @@ namespace SalesReach.Application.Services
         private readonly IPessoaDocumentoService _documentoService;
         private readonly IPessoaContatoService _contatoService;
         private readonly IEnderecoService _enderecoService;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public PessoaService(IPessoaRepository pessoaRepository, IPessoaDocumentoService documentoService, IPessoaContatoService contatoService, IEnderecoService enderecoService, IMapper mapper)
+        public PessoaService(IPessoaRepository pessoaRepository, IPessoaDocumentoService documentoService, IPessoaContatoService contatoService, IEnderecoService enderecoService, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _pessoaRepository = pessoaRepository;
             _documentoService = documentoService;
             _contatoService = contatoService;
             _enderecoService = enderecoService;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -84,14 +89,6 @@ namespace SalesReach.Application.Services
             return await _pessoaRepository.AtualizarAsync(pessoa);
         }
 
-        public async Task<int> InserirAsync(PessoaModel pessoaModel)
-        {
-            var pessoa = new Pessoa();
-
-            pessoa.Inserir(pessoaModel.Nome, pessoaModel.PessoaTipoId, pessoaModel.DataNascimento, pessoaModel.Ativo);
-            return await _pessoaRepository.InserirAsync(pessoa);
-        }
-
         public async Task<bool> VerificarSeExisteAsync(int id)
         {
             var retorno = await _pessoaRepository.BuscarPorIdAsync(id);
@@ -108,6 +105,46 @@ namespace SalesReach.Application.Services
             pessoa.Atualizar(pessoa.Id, pessoa.Nome, pessoa.PessoaTipoId, pessoa.DataNascimento, ativo);
 
             return await _pessoaRepository.AtualizarAsync(pessoa);
+        }
+
+        public async Task<PessoaResponseModel> InserirAsync(PessoaInserirModel pessoaModel)
+        {
+            var pessoa = new Pessoa();
+            var novaPessoa = new PessoaResponseModel();
+
+            var novoDocumento = await _documentoService.BuscarPorNumeroAsync(pessoaModel.Documento.NumeroDocumento);
+
+            if (novoDocumento is not null)
+                throw new Exception("Já exite pessoa com o mesmo número de documento cadastrado.");
+
+            pessoa.Inserir(pessoaModel.Nome, pessoaModel.PessoaTipoId, pessoaModel.DataNascimento, pessoaModel.Ativo);
+
+            await _unitOfWork.BeginTransation();
+
+            var pessoaId =  await _pessoaRepository.InserirAsync(pessoa);
+
+            if (pessoaId == 0)
+                return null;
+
+            pessoaModel.Documento.Id = pessoaId;
+            pessoaModel.Contato.PessoaId = pessoaId;
+            pessoaModel.Endereco.PessoaId = pessoaId;
+
+            await _documentoService.InserirAsync(pessoaModel.Documento);
+            await _contatoService.InserirAsync(pessoaModel.Contato);
+            await _enderecoService.InserirAsync(pessoaModel.Endereco);
+
+            await _unitOfWork.Commit();
+
+            await Task.WhenAll
+               (
+                  Task.Run(async () => novaPessoa.Pessoa = _mapper.Map<PessoaModel>(await _pessoaRepository.BuscarPorIdAsync(pessoaId))),
+                  Task.Run(async () => novaPessoa.Documento = _mapper.Map<PessoaDocumentoModel>(await _documentoService.BuscarPorIdAsync(pessoaId))),
+                  Task.Run(async () => novaPessoa.Contato = _mapper.Map<PessoaContatoModel>(await _contatoService.BuscarPorPessoaIdAsync(pessoaId))),
+                  Task.Run(async () => novaPessoa.Endereco = _mapper.Map<EnderecoModel>(await _enderecoService.BuscarPorPessoaIdAsync(pessoaId)))
+               );
+          
+            return novaPessoa;
         }
     }
 }

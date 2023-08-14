@@ -1,9 +1,4 @@
-﻿using SalesReach.Infra.Data.Unit_Of_Work.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SalesReach.Domain.Repositories.UnitOfWork.Interface;
 
 namespace SalesReach.Infra.Data.Unit_Of_Work
 {
@@ -16,18 +11,18 @@ namespace SalesReach.Infra.Data.Unit_Of_Work
             _session = session;
         }
 
-        public void BeginTransation()
+        public async Task BeginTransation()
         {
-            _session.Transaction = _session.Connection.BeginTransaction();
+            _session.Transaction =  _session.Connection.BeginTransaction();
         }
 
-        public void Commit()
+        public async Task Commit()
         {
             _session.Transaction.Commit();
             Dispose();
         }
 
-        public void Rollback()
+        public async Task Rollback()
         {
             _session.Transaction.Rollback();
             Dispose();

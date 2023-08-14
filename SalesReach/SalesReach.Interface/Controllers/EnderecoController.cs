@@ -77,20 +77,20 @@ namespace SalesReach.Interface.Controllers
             return response > 0 ? ResponseNoContent() : ResponseBadRequest("Erro ao atualizar Endereço.");
         }
 
-        [HttpPost()]
-        [CustomResponse(StatusCodes.Status200OK)]
-        [CustomResponse(StatusCodes.Status400BadRequest)]
-        [CustomResponse(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> InserirAsync(EnderecoModel enderecoModel)
-        {
-            var modelValidator = _enderecoValidator.Validate(enderecoModel);
+        //[HttpPost()]
+        //[CustomResponse(StatusCodes.Status200OK)]
+        //[CustomResponse(StatusCodes.Status400BadRequest)]
+        //[CustomResponse(StatusCodes.Status404NotFound)]
+        //public async Task<IActionResult> InserirAsync(EnderecoModel enderecoModel)
+        //{
+        //    var modelValidator = _enderecoValidator.Validate(enderecoModel);
 
-            if (!modelValidator.IsValid)
-                return BadRequest(modelValidator.Errors);
+        //    if (!modelValidator.IsValid)
+        //        return BadRequest(modelValidator.Errors);
 
-            var response = await _enderecoService.InserirAsync(enderecoModel);
-            return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir novo Endereço.");
-        }
+        //    var response = await _enderecoService.InserirAsync(enderecoModel);
+        //    return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir novo Endereço.");
+        //}
 
     }
 }

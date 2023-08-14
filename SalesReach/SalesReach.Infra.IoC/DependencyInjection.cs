@@ -3,15 +3,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SalesReach.Application.Mappings;
 using SalesReach.Application.Models;
+using SalesReach.Application.Models.InserirModels;
 using SalesReach.Application.Services;
 using SalesReach.Application.Services.Interfaces;
 using SalesReach.Application.Validations;
 using SalesReach.Domain.Repositories;
+using SalesReach.Domain.Repositories.UnitOfWork.Interface;
 using SalesReach.Infra.Data;
 using SalesReach.Infra.Data.Repositories;
 using SalesReach.Infra.Data.SettingsDataBase;
 using SalesReach.Infra.Data.Unit_Of_Work;
-using SalesReach.Infra.Data.Unit_Of_Work.Interface;
 
 namespace SalesReach.Infra.IoC
 {
@@ -34,10 +35,10 @@ namespace SalesReach.Infra.IoC
             services.AddTransient<IPessoaContatoRepository, PessoaContatoRepository>();
 
             #region .: FluentValidator :.
-            services.AddTransient<IValidator<PessoaModel>, PessoaValidator>();
-            services.AddTransient<IValidator<PessoaContatoModel>, PessoaContatoValidator>();
-            services.AddTransient<IValidator<EnderecoModel>, EnderecoValidator>();
-            services.AddTransient<IValidator<PessoaDocumentoModel>, PessoaDocumentoValidator>();
+            services.AddTransient<IValidator<PessoaInserirModel>, PessoaValidator>();
+            services.AddTransient<IValidator<ContatoInserirModel>, PessoaContatoValidator>();
+            services.AddTransient<IValidator<EnderecoInserirModel>, EnderecoValidator>();
+            services.AddTransient<IValidator<DocumentoInserirModel>, PessoaDocumentoValidator>();
             #endregion
         }
     }

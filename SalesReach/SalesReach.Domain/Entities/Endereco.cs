@@ -49,6 +49,7 @@ namespace SalesReach.Domain.Entities
             Numero = numero;
             Complemento = complemento;
             Bairro = bairro;
+            Localidade = localidade;
             UF = uf;
         }
 
@@ -63,6 +64,7 @@ namespace SalesReach.Domain.Entities
             Numero = numero;
             Complemento = complemento;
             Bairro = bairro;
+            Localidade = localidade;
             UF = uf;
         }
 

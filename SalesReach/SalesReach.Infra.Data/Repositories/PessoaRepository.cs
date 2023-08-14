@@ -58,16 +58,17 @@ namespace SalesReach.Infra.Data.Repositories
                                   ,DataNascimento = @DataNascimento
                                   ,Ativo = @Ativo
                                   ,PessoaTipoId = @PessoaTipoId
-                          WHERE Id = @Id";
+                         WHERE Id = @Id";
             return await _session.Connection.ExecuteAsync(sql, pessoa);
         }
 
         public async Task<int> InserirAsync(Pessoa pessoa)
         {
             var sql = $@"INSERT INTO FitCard_Gestao..Pessoa_Samuel(Nome, PessoaTipoId, DataNascimento, Ativo, DataCadastro)
-                                    OUTPUT INSERTED.Id
-                                                VALUES(@Nome, @PessoaTipoId, @DataNascimento, @Ativo, GETDATE())";
-            return await _session.Connection.ExecuteAsync(sql, pessoa);
+                                VALUES(@Nome, @PessoaTipoId, @DataNascimento, @Ativo, GETDATE());
+                         SELECT @@IDENTITY";
+            var retorno =  await _session.Connection.ExecuteScalarAsync<int>(sql, pessoa, _session.Transaction);
+            return retorno;
         }
     }
 }

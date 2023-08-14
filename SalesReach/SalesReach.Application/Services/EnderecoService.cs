@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SalesReach.Application.Models;
+using SalesReach.Application.Models.InserirModels;
 using SalesReach.Application.Services.Interfaces;
 using SalesReach.Domain.Entities;
 using SalesReach.Domain.Repositories;
@@ -40,11 +41,11 @@ namespace SalesReach.Application.Services
             return await _enderecoRespository.AtualizarAsync(endereco);
         }
 
-        public async Task<int> InserirAsync(EnderecoModel enderecoModel)
+        public async Task<int> InserirAsync(EnderecoInserirModel enderecoModel)
         {
             var endereco = new Endereco();
 
-            endereco.Inserir(enderecoModel.PessoaId, enderecoModel.CEP, enderecoModel.Logradouro, enderecoModel.Numero, enderecoModel.Complemento, enderecoModel.Bairro, endereco.Localidade, enderecoModel.UF);
+            endereco.Inserir(enderecoModel.PessoaId, enderecoModel.CEP, enderecoModel.Logradouro, enderecoModel.Numero, enderecoModel.Complemento, enderecoModel.Bairro, enderecoModel.Localidade, enderecoModel.UF);
             return await _enderecoRespository.InserirAsync(endereco);
         }
     }

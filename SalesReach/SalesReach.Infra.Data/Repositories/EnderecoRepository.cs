@@ -135,7 +135,7 @@ namespace SalesReach.Infra.Data.Repositories
                                  ,@UF
                                  ,@PessoaId
                                  ,GETDATE())";
-            return await _session.Connection.ExecuteAsync(sql, endereco);
+            return await _session.Connection.ExecuteAsync(sql, endereco, _session.Transaction);
         }
     }
 }

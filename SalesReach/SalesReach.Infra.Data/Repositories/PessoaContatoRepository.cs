@@ -95,7 +95,7 @@ namespace SalesReach.Infra.Data.Repositories
         {
             var sql = $@"INSERT INTO FitCard_Gestao..PessoaContato_Samuel(PessoaId, TeleFoneTipoId, Telefone, Email, DataCadastro)
                           VALUES(@PessoaId, @TelefoneTipoId, @Telefone, @Email, GETDATE())";
-            return await _session.Connection.ExecuteAsync(sql, pessoaContato);
+            return await _session.Connection.ExecuteAsync(sql, pessoaContato, _session.Transaction);
         }
     }
 }

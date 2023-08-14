@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using SalesReach.Application.Models;
+using SalesReach.Application.Models.InserirModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SalesReach.Application.Validations
 {
-    public class EnderecoValidator : AbstractValidator<EnderecoModel>
+    public class EnderecoValidator : AbstractValidator<EnderecoInserirModel>
     {
         public EnderecoValidator()
         {

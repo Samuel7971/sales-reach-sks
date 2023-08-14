@@ -33,7 +33,7 @@ namespace SalesReach.Infra.Data.Repositories
             var sql = $@"SELECT Id, DocumentoTipoId, NumeroDocumento, DataCadastro
                                   FROM FitCard_Gestao..PessoaDocumento_Samuel 
                                       WHERE NumeroDocumento LIKE '%' + REPLACE(@numeroDocumento,'&','%') + '%';";
-            return await _session.Connection.QueryFirstAsync<PessoaDocumento>(sql, new { numeroDocumento });
+            return await _session.Connection.QuerySingleOrDefaultAsync<PessoaDocumento>(sql, new { numeroDocumento });
         }
 
         public async Task<int> AtualizarAsync(PessoaDocumento documento)
@@ -50,7 +50,7 @@ namespace SalesReach.Infra.Data.Repositories
         {
             var sql = $@"INSERT INTO FitCard_Gestao..PessoaDocumento_Samuel(Id, DocumentoTipoId, NumeroDocumento, DataCadastro)
                                    VALUES(@Id, @DocumentoTipoId, @NumeroDocumento, GETDATE())";
-            return await _session.Connection.ExecuteAsync(sql, documento);
+            return await _session.Connection.ExecuteAsync(sql, documento, _session.Transaction);
         }
 
         public Task<bool> VerificarSeExisteAsync(int id)

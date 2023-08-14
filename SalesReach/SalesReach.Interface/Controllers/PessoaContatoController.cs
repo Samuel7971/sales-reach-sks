@@ -66,20 +66,20 @@ namespace SalesReach.Interface.Controllers
             return response is not null ? ResponseOk(response) : ResponseNotFound("E-mail não localizado.");
         }
 
-        [HttpPost()]
-        [CustomResponse(StatusCodes.Status200OK)]
-        [CustomResponse(StatusCodes.Status400BadRequest)]
-        [CustomResponse(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> InserirAsync(PessoaContatoModel contatoModel)
-        {
-            var modelValidator = _pessoaContatoValidator.Validate(contatoModel);
+        //[HttpPost()]
+        //[CustomResponse(StatusCodes.Status200OK)]
+        //[CustomResponse(StatusCodes.Status400BadRequest)]
+        //[CustomResponse(StatusCodes.Status404NotFound)]
+        //public async Task<IActionResult> InserirAsync(PessoaContatoModel contatoModel)
+        //{
+        //    var modelValidator = _pessoaContatoValidator.Validate(contatoModel);
 
-            if (!modelValidator.IsValid) 
-                return BadRequest(modelValidator.Errors);
+        //    if (!modelValidator.IsValid) 
+        //        return BadRequest(modelValidator.Errors);
 
-            var response = await _pessoaContatoService.InserirAsync(contatoModel);
-            return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir novo Contatos.");
-        }
+        //    var response = await _pessoaContatoService.InserirAsync(contatoModel);
+        //    return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir novo Contatos.");
+        //}
 
         [HttpPut()]
         [CustomResponse(StatusCodes.Status200OK)]
