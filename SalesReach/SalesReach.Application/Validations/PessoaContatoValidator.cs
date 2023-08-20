@@ -1,11 +1,9 @@
 ﻿using FluentValidation;
 using SalesReach.Application.Models;
-using SalesReach.Application.Models.InserirModels;
-using System.Security.Cryptography.X509Certificates;
 
 namespace SalesReach.Application.Validations
 {
-    public class PessoaContatoValidator : AbstractValidator<ContatoInserirModel>
+    public class PessoaContatoValidator : AbstractValidator<PessoaContatoModel>
     {
         public PessoaContatoValidator()
         {

@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using SalesReach.Application.Models;
-using SalesReach.Application.Models.InserirModels;
+using SalesReach.Application.Models.RequestModels;
 using SalesReach.Application.Services.Interfaces;
 using SalesReach.Interface.Attributes;
 using SalesReach.Interface.Controllers.Shared;
@@ -13,8 +12,8 @@ namespace SalesReach.Interface.Controllers
     public class PessoaController : APIControllers
     {
         private readonly IPessoaService _pessoaService;
-        private readonly IValidator<PessoaInserirModel> _pessoaValidator;
-        public PessoaController(IPessoaService pessoaService, IValidator<PessoaInserirModel> pessoaValidator)
+        private readonly IValidator<PessoaRequestModel> _pessoaValidator;
+        public PessoaController(IPessoaService pessoaService, IValidator<PessoaRequestModel> pessoaValidator)
         {
             _pessoaService = pessoaService;
             _pessoaValidator = pessoaValidator;
@@ -73,7 +72,7 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
         [CustomResponse(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> InserirAsync(PessoaInserirModel pessoaModel)
+        public async Task<IActionResult> InserirAsync(PessoaRequestModel pessoaModel)
         {
             var modelValidator = _pessoaValidator.Validate(pessoaModel);
 

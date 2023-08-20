@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using SalesReach.Application.Models;
-using SalesReach.Application.Models.InserirModels;
+using SalesReach.Application.Models.RequestModels;
 using SalesReach.Application.Models.ResponseModels;
 using SalesReach.Application.Services.Interfaces;
 using SalesReach.Domain.Entities;
@@ -107,7 +107,7 @@ namespace SalesReach.Application.Services
             return await _pessoaRepository.AtualizarAsync(pessoa);
         }
 
-        public async Task<PessoaResponseModel> InserirAsync(PessoaInserirModel pessoaModel)
+        public async Task<PessoaResponseModel> InserirAsync(PessoaRequestModel pessoaModel)
         {
             var pessoa = new Pessoa();
             var novaPessoa = new PessoaResponseModel();

@@ -1,5 +1,4 @@
 ﻿using SalesReach.Application.Models;
-using SalesReach.Application.Models.InserirModels;
 
 namespace SalesReach.Application.Services.Interfaces
 {
@@ -8,7 +7,7 @@ namespace SalesReach.Application.Services.Interfaces
         Task<IEnumerable<PessoaDocumentoModel>> BuscarTodosAsync();
         Task<PessoaDocumentoModel> BuscarPorIdAsync(int id);
         Task<PessoaDocumentoModel> BuscarPorNumeroAsync(string numeroDocumento);
-        Task<int> InserirAsync(DocumentoInserirModel documento);
+        Task<int> InserirAsync(PessoaDocumentoModel documento);
         Task<int> AtualizarAsync(PessoaDocumentoModel documento);
         Task<bool> VerificarSeExisteAsync(int id);
     }

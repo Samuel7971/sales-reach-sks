@@ -1,10 +1,9 @@
 ﻿using FluentValidation;
-using SalesReach.Application.Models;
-using SalesReach.Application.Models.InserirModels;
+using SalesReach.Application.Models.RequestModels;
 
 namespace SalesReach.Application.Validations
 {
-    public class PessoaValidator : AbstractValidator<PessoaInserirModel>
+    public class PessoaValidator : AbstractValidator<PessoaRequestModel>
     {
         public PessoaValidator() 
         {

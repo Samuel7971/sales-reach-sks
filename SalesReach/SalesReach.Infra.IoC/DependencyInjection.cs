@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SalesReach.Application.Mappings;
 using SalesReach.Application.Models;
-using SalesReach.Application.Models.InserirModels;
+using SalesReach.Application.Models.RequestModels;
 using SalesReach.Application.Services;
 using SalesReach.Application.Services.Interfaces;
 using SalesReach.Application.Validations;
@@ -35,10 +35,10 @@ namespace SalesReach.Infra.IoC
             services.AddTransient<IPessoaContatoRepository, PessoaContatoRepository>();
 
             #region .: FluentValidator :.
-            services.AddTransient<IValidator<PessoaInserirModel>, PessoaValidator>();
-            services.AddTransient<IValidator<ContatoInserirModel>, PessoaContatoValidator>();
-            services.AddTransient<IValidator<EnderecoInserirModel>, EnderecoValidator>();
-            services.AddTransient<IValidator<DocumentoInserirModel>, PessoaDocumentoValidator>();
+            services.AddTransient<IValidator<PessoaRequestModel>, PessoaValidator>();
+            services.AddTransient<IValidator<PessoaContatoModel>, PessoaContatoValidator>();
+            services.AddTransient<IValidator<EnderecoModel>, EnderecoValidator>();
+            services.AddTransient<IValidator<PessoaDocumentoModel>, PessoaDocumentoValidator>();
             #endregion
         }
     }
