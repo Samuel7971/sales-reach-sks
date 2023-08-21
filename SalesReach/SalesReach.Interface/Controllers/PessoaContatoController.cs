@@ -13,8 +13,8 @@ namespace SalesReach.Interface.Controllers
     public class PessoaContatoController : APIControllers
     {
         private readonly IPessoaContatoService _pessoaContatoService;
-        private readonly IValidator<PessoaContatoModel> _pessoaContatoValidator;
-        public PessoaContatoController(IPessoaContatoService pessoaContatoService, IValidator<PessoaContatoModel> pessoaContatoValidator)
+        private readonly IValidator<ContatoModel> _pessoaContatoValidator;
+        public PessoaContatoController(IPessoaContatoService pessoaContatoService, IValidator<ContatoModel> pessoaContatoValidator)
         {
             _pessoaContatoService = pessoaContatoService;
             _pessoaContatoValidator = pessoaContatoValidator;
@@ -85,7 +85,7 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
         [CustomResponse(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> AtualizarAsync(PessoaContatoModel contatoModel)
+        public async Task<IActionResult> AtualizarAsync(ContatoModel contatoModel)
         {
             var modelValidator = _pessoaContatoValidator.Validate(contatoModel);
 

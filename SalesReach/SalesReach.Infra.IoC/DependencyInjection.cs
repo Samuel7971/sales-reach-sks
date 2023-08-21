@@ -35,10 +35,11 @@ namespace SalesReach.Infra.IoC
             services.AddTransient<IPessoaContatoRepository, PessoaContatoRepository>();
 
             #region .: FluentValidator :.
-            services.AddTransient<IValidator<PessoaRequestModel>, PessoaValidator>();
-            services.AddTransient<IValidator<PessoaContatoModel>, PessoaContatoValidator>();
+            services.AddTransient<IValidator<PessoaRequestModel>, PessoaRequestValidator>();
+            services.AddTransient<IValidator<PessoaModel>, PessoaValidator>();
+            services.AddTransient<IValidator<ContatoModel>, PessoaContatoValidator>();
             services.AddTransient<IValidator<EnderecoModel>, EnderecoValidator>();
-            services.AddTransient<IValidator<PessoaDocumentoModel>, PessoaDocumentoValidator>();
+            services.AddTransient<IValidator<DocumentoModel>, PessoaDocumentoValidator>();
             #endregion
         }
     }

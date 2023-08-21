@@ -2,6 +2,9 @@
 
 namespace SalesReach.Interface.Controllers.Shared
 {
+    /// <summary>
+    /// Custom result 
+    /// </summary>
     public class CustomResult
     {
         public HttpStatusCode StatusCode { get; private set; }

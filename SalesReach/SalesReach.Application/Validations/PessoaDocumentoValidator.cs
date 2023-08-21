@@ -3,7 +3,7 @@ using SalesReach.Application.Models;
 
 namespace SalesReach.Application.Validations
 {
-    public class PessoaDocumentoValidator : AbstractValidator<PessoaDocumentoModel>
+    public class PessoaDocumentoValidator : AbstractValidator<DocumentoModel>
     {
         public PessoaDocumentoValidator()
         {

@@ -1,20 +1,12 @@
 ﻿using FluentValidation;
-using SalesReach.Application.Models;
 using SalesReach.Application.Models.RequestModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SalesReach.Application.Validations
 {
-    public class PessoaValidator : AbstractValidator<PessoaModel>
+    public class PessoaRequestValidator : AbstractValidator<PessoaRequestModel>
     {
-        public PessoaValidator()
+        public PessoaRequestValidator() 
         {
-            RuleFor(x => x.Id)
-                .GreaterThan(0).WithMessage("Id é requerido.");
             RuleFor(x => x.Nome)
                 .NotEmpty().NotNull().WithMessage("O nome é requerido.")
                 .MinimumLength(5).WithMessage("É preciso ter mais que 5 caracteres no nome.")

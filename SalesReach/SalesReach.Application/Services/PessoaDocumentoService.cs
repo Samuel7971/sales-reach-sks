@@ -17,18 +17,18 @@ namespace SalesReach.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PessoaDocumentoModel>> BuscarTodosAsync() 
+        public async Task<IEnumerable<DocumentoModel>> BuscarTodosAsync() 
         {
-            return _mapper.Map<IEnumerable<PessoaDocumentoModel>>(await _documentoRepository.BuscarTodosAsync());
+            return _mapper.Map<IEnumerable<DocumentoModel>>(await _documentoRepository.BuscarTodosAsync());
         }
 
-        public async Task<PessoaDocumentoModel> BuscarPorIdAsync(int id)
-            => _mapper.Map<PessoaDocumentoModel>(await _documentoRepository.BuscarPorIdAsync(id));
+        public async Task<DocumentoModel> BuscarPorIdAsync(int id)
+            => _mapper.Map<DocumentoModel>(await _documentoRepository.BuscarPorIdAsync(id));
 
-        public async Task<PessoaDocumentoModel> BuscarPorNumeroAsync(string numeroDocumento)
-            => _mapper.Map<PessoaDocumentoModel>(await _documentoRepository.BuscarPorNumeroAsync(numeroDocumento));
+        public async Task<DocumentoModel> BuscarPorNumeroAsync(string numeroDocumento)
+            => _mapper.Map<DocumentoModel>(await _documentoRepository.BuscarPorNumeroAsync(numeroDocumento));
 
-        public async Task<int> AtualizarAsync(PessoaDocumentoModel documentoModel)
+        public async Task<int> AtualizarAsync(DocumentoModel documentoModel)
         {
             var documento = await _documentoRepository.BuscarPorIdAsync(documentoModel.Id);
 
@@ -40,7 +40,7 @@ namespace SalesReach.Application.Services
             return await _documentoRepository.AtualizarAsync(documento);
         }
 
-        public async Task<int> InserirAsync(PessoaDocumentoModel documentoModel)
+        public async Task<int> InserirAsync(DocumentoModel documentoModel)
         {
             var documento = new PessoaDocumento();
 

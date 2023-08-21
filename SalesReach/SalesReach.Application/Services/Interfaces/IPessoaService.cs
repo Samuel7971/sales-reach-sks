@@ -6,10 +6,10 @@ namespace SalesReach.Application.Services.Interfaces
 {
     public interface IPessoaService
     {
-        Task<IEnumerable<PessoaModel>> BuscarTodosAsync();
-        Task<PessoaModel> BuscarPorIdAsync(int id);
-        Task<PessoaModel> BuscarPorNomeAsync(string nome);
-        Task<PessoaResponseModel> InserirAsync(PessoaRequestModel pessoa);
+        Task<IEnumerable<PessoaViewModel>> BuscarTodosAsync();
+        Task<PessoaViewModel> BuscarPorIdAsync(int id);
+        Task<PessoaViewModel> BuscarPorNomeAsync(string nome);
+        Task<PessoaInserirResponseViewModel> InserirAsync(PessoaRequestModel pessoa);
         Task<int> AtualizarAsync(PessoaModel pessoa);
         Task<bool> VerificarSeExisteAsync(int id);
         Task<int> AtualizarAtivoAsync(int id, bool ativo);

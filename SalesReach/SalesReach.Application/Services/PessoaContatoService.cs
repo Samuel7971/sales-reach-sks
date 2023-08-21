@@ -17,23 +17,23 @@ namespace SalesReach.Application.Services
         }
 
 
-        public async Task<IEnumerable<PessoaContatoModel>> BuscarTodosAsync() 
-            => _mapper.Map<IEnumerable<PessoaContatoModel>>(await _contatoRepository.BuscarTodosAsync());
+        public async Task<IEnumerable<ContatoModel>> BuscarTodosAsync() 
+            => _mapper.Map<IEnumerable<ContatoModel>>(await _contatoRepository.BuscarTodosAsync());
 
-        public async Task<PessoaContatoModel> BuscarPorEmailAsync(string email) 
-            => _mapper.Map<PessoaContatoModel>(await _contatoRepository.BuscarPorEmailAsync(email));
+        public async Task<ContatoModel> BuscarPorEmailAsync(string email) 
+            => _mapper.Map<ContatoModel>(await _contatoRepository.BuscarPorEmailAsync(email));
 
-        public async Task<PessoaContatoModel> BuscarPorIdAsync(int id) 
-            => _mapper.Map<PessoaContatoModel>(await _contatoRepository.BuscarPorIdAsync(id));
+        public async Task<ContatoModel> BuscarPorIdAsync(int id) 
+            => _mapper.Map<ContatoModel>(await _contatoRepository.BuscarPorIdAsync(id));
 
-        public async Task<PessoaContatoModel> BuscarPorNumeroAsync(string numero) 
-            => _mapper.Map<PessoaContatoModel>(await _contatoRepository.BuscarPorNumeroAsync(numero));
+        public async Task<ContatoModel> BuscarPorNumeroAsync(string numero) 
+            => _mapper.Map<ContatoModel>(await _contatoRepository.BuscarPorNumeroAsync(numero));
 
-        public async Task<PessoaContatoModel> BuscarPorPessoaIdAsync(int pessoaId)
-            => _mapper.Map<PessoaContatoModel>(await _contatoRepository.BuscarPorPessoaIdAsync(pessoaId));
+        public async Task<ContatoModel> BuscarPorPessoaIdAsync(int pessoaId)
+            => _mapper.Map<ContatoModel>(await _contatoRepository.BuscarPorPessoaIdAsync(pessoaId));
 
 
-        public async Task<int> AtualizarAsync(PessoaContatoModel contatoModel)
+        public async Task<int> AtualizarAsync(ContatoModel contatoModel)
         {
             var contato = await _contatoRepository.BuscarPorIdAsync(contatoModel.Id);
 
@@ -41,7 +41,7 @@ namespace SalesReach.Application.Services
             return await _contatoRepository.AtualizarAsync(contato);
         }
 
-        public async Task<int> InserirAsync(PessoaContatoModel contatoModel)
+        public async Task<int> InserirAsync(ContatoModel contatoModel)
         {
             var contato = new PessoaContato();
 

@@ -22,7 +22,7 @@ namespace SalesReach.Infra.Data.Repositories
                          	  , Telefone
                          	  , Email
                          	  , DataCadastro 
-                         FROM FitCard_Gestao..PessoaContato_Samuel";
+                         FROM FitCard_Gestao..Contato_Samuel";
             return await _session.Connection.QueryAsync<PessoaContato>(sql);
         }
 
@@ -35,7 +35,7 @@ namespace SalesReach.Infra.Data.Repositories
                          	  , Telefone
                          	  , Email
                          	  , DataCadastro 
-                         FROM FitCard_Gestao..PessoaContato_Samuel
+                         FROM FitCard_Gestao..Contato_Samuel
                          WHERE Email = @email";
             return await _session.Connection.QueryFirstAsync<PessoaContato>(sql, new { email });
         }
@@ -49,7 +49,7 @@ namespace SalesReach.Infra.Data.Repositories
                          	  , Telefone
                          	  , Email
                          	  , DataCadastro 
-                         FROM FitCard_Gestao..PessoaContato_Samuel
+                         FROM FitCard_Gestao..Contato_Samuel
                          WHERE Id = @id";
             return await _session.Connection.QueryFirstAsync<PessoaContato>(sql, new { id });
         }
@@ -63,7 +63,7 @@ namespace SalesReach.Infra.Data.Repositories
                          	  , Telefone
                          	  , Email
                          	  , DataCadastro 
-                         FROM FitCard_Gestao..PessoaContato_Samuel
+                         FROM FitCard_Gestao..Contato_Samuel
                          WHERE Telefone = @numero";
             return await _session.Connection.QueryFirstAsync<PessoaContato>(sql, new { numero });
         }
@@ -77,7 +77,7 @@ namespace SalesReach.Infra.Data.Repositories
                          	  , Telefone
                          	  , Email
                          	  , DataCadastro 
-                         FROM FitCard_Gestao..PessoaContato_Samuel
+                         FROM FitCard_Gestao..Contato_Samuel
                          WHERE PessoaId = @pessoaId";
             return await _session.Connection.QueryFirstAsync<PessoaContato>(sql, new { pessoaId });
         }
@@ -86,14 +86,14 @@ namespace SalesReach.Infra.Data.Repositories
         {
             var sql = $@"UPDATE FitCard_Gestao..PessoaContato_Samuel
                              SET TelefoneTipoId = @TelefoneTipoId ,Telefone = @Telefone ,Email = @Email
-                         FROM PessoaContato_Samuel
+                         FROM Contato_Samuel
                          WHERE Id = @Id AND PessoaId = @PessoaId";
             return await _session.Connection.ExecuteAsync(sql, pessoaContato);
         }
 
         public async Task<int> InserirAsync(PessoaContato pessoaContato)
         {
-            var sql = $@"INSERT INTO FitCard_Gestao..PessoaContato_Samuel(PessoaId, TeleFoneTipoId, Telefone, Email, DataCadastro)
+            var sql = $@"INSERT INTO FitCard_Gestao..Contato_Samuel(PessoaId, TeleFoneTipoId, Telefone, Email, DataCadastro)
                           VALUES(@PessoaId, @TelefoneTipoId, @Telefone, @Email, GETDATE())";
             return await _session.Connection.ExecuteAsync(sql, pessoaContato, _session.Transaction);
         }

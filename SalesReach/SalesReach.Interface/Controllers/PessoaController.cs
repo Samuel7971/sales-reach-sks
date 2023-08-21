@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using SalesReach.Application.Models;
 using SalesReach.Application.Models.RequestModels;
 using SalesReach.Application.Services.Interfaces;
 using SalesReach.Interface.Attributes;
@@ -12,10 +13,19 @@ namespace SalesReach.Interface.Controllers
     public class PessoaController : APIControllers
     {
         private readonly IPessoaService _pessoaService;
-        private readonly IValidator<PessoaRequestModel> _pessoaValidator;
-        public PessoaController(IPessoaService pessoaService, IValidator<PessoaRequestModel> pessoaValidator)
+        private readonly IValidator<PessoaRequestModel> _pessoaRequestValidator;
+        private readonly IValidator<PessoaModel> _pessoaValidator;
+
+        /// <summary>
+        /// Construtor controller pessoa
+        /// </summary>
+        /// <param name="pessoaService"></param>
+        /// <param name="pessoaRequestValidator"></param>
+        /// <param name="pessoaValidator"></param>
+        public PessoaController(IPessoaService pessoaService, IValidator<PessoaRequestModel> pessoaRequestValidator, IValidator<PessoaModel> pessoaValidator)
         {
             _pessoaService = pessoaService;
+            _pessoaRequestValidator = pessoaRequestValidator;
             _pessoaValidator = pessoaValidator;
         }
 
@@ -74,7 +84,7 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> InserirAsync(PessoaRequestModel pessoaModel)
         {
-            var modelValidator = _pessoaValidator.Validate(pessoaModel);
+            var modelValidator = _pessoaRequestValidator.Validate(pessoaModel);
 
             if (!modelValidator.IsValid)
                 return BadRequest(modelValidator.Errors);
@@ -83,25 +93,25 @@ namespace SalesReach.Interface.Controllers
             return response is not null ? ResponseCreated(response) : ResponseBadRequest("Erro ao inserir novo Pessoa.");
         }
 
-        ///// <summary>
-        ///// Atualizar Pessoa
-        ///// </summary>
-        ///// <param name="pessoaModel"></param>
-        ///// <returns></returns>
-        //[HttpPut()]
-        //[CustomResponse(StatusCodes.Status200OK)]
-        //[CustomResponse(StatusCodes.Status400BadRequest)]
-        //[CustomResponse(StatusCodes.Status404NotFound)]
-        //public async Task<IActionResult> AtualizarAsync(PessoaModel pessoaModel)
-        //{
-        //    var modelValidator = _pessoaValidator.Validate(pessoaModel);
+        /// <summary>
+        /// Atualizar Pessoa
+        /// </summary>
+        /// <param name="pessoaModel"></param>
+        /// <returns></returns>
+        [HttpPut()]
+        [CustomResponse(StatusCodes.Status200OK)]
+        [CustomResponse(StatusCodes.Status400BadRequest)]
+        [CustomResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> AtualizarAsync(PessoaModel pessoaModel)
+        {
+            var modelValidator = _pessoaValidator.Validate(pessoaModel);
 
-        //    if (!modelValidator.IsValid)
-        //        return BadRequest(modelValidator.Errors);
+            if (!modelValidator.IsValid)
+                return BadRequest(modelValidator.Errors);
 
-        //    var response = await _pessoaService.AtualizarAsync(pessoaModel);
-        //    return response > 0 ? ResponseNoContent() : ResponseBadRequest("Erro ao atualizar pessoa.");
-        //}
+            var response =  await _pessoaService.AtualizarAsync(pessoaModel);
+            return response > 0 ? ResponseNoContent() : ResponseBadRequest("Erro ao atualizar pessoa.");
+        }
 
         /// <summary>
         /// Verificar se existe Pessoa

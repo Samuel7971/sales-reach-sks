@@ -9,17 +9,17 @@ namespace SalesReach.Application.Mappings
         public DomainToModel()
         {
             #region .: Pessoa Mapping :.
-            CreateMap<Pessoa, PessoaModel>();
+            CreateMap<Pessoa, PessoaViewModel>();
             //CreateMap<IEnumerable<Pessoa>, IEnumerable<PessoaModel>>(); 
             #endregion
 
             #region .: Documento Mapping :.
-            CreateMap<PessoaDocumento, PessoaDocumentoModel>();
+            CreateMap<PessoaDocumento, DocumentoModel>();
             //CreateMap<IEnumerable<PessoaDocumento>, IEnumerable<PessoaDocumentoModel>>();
             #endregion
 
             #region .: Contato Mapping :.
-            CreateMap<PessoaContato, PessoaContatoModel>();
+            CreateMap<PessoaContato, ContatoModel>();
             //CreateMap<IEnumerable<PessoaContato>, IEnumerable<PessoaContatoModel>>();
             #endregion
 

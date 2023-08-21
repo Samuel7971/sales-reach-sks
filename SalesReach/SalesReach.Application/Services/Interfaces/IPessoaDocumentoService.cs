@@ -4,11 +4,11 @@ namespace SalesReach.Application.Services.Interfaces
 {
     public interface IPessoaDocumentoService
     {
-        Task<IEnumerable<PessoaDocumentoModel>> BuscarTodosAsync();
-        Task<PessoaDocumentoModel> BuscarPorIdAsync(int id);
-        Task<PessoaDocumentoModel> BuscarPorNumeroAsync(string numeroDocumento);
-        Task<int> InserirAsync(PessoaDocumentoModel documento);
-        Task<int> AtualizarAsync(PessoaDocumentoModel documento);
+        Task<IEnumerable<DocumentoModel>> BuscarTodosAsync();
+        Task<DocumentoModel> BuscarPorIdAsync(int id);
+        Task<DocumentoModel> BuscarPorNumeroAsync(string numeroDocumento);
+        Task<int> InserirAsync(DocumentoModel documento);
+        Task<int> AtualizarAsync(DocumentoModel documento);
         Task<bool> VerificarSeExisteAsync(int id);
     }
 }

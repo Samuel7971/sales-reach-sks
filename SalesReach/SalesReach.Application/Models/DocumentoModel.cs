@@ -1,6 +1,6 @@
 ﻿namespace SalesReach.Application.Models
 {
-    public class PessoaDocumentoModel 
+    public class DocumentoModel 
     {
         public int Id { get; set; }
         public int DocumentoTipoId { get; set; }

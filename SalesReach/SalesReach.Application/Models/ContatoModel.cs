@@ -1,6 +1,6 @@
 ﻿namespace SalesReach.Application.Models
 {
-    public class PessoaContatoModel 
+    public class ContatoModel 
     {
         public int Id { get; set; }
         public int PessoaId { get; set; }

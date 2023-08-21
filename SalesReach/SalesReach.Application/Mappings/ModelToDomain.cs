@@ -14,18 +14,18 @@ namespace SalesReach.Application.Mappings
         public ModelToDomain()
         {
             #region .: Pessoa Mapping
-            CreateMap<PessoaModel, Pessoa>();
-            CreateMap<IEnumerable<PessoaModel>, IEnumerable<Pessoa>>();
+            CreateMap<PessoaViewModel, Pessoa>();
+            CreateMap<IEnumerable<PessoaViewModel>, IEnumerable<Pessoa>>();
             #endregion
 
             #region .: Documento Mapping :.
-            CreateMap<PessoaDocumentoModel, PessoaDocumento>();
-            CreateMap<IEnumerable<PessoaDocumentoModel>, IEnumerable<PessoaDocumento>>();
+            CreateMap<DocumentoModel, PessoaDocumento>();
+            CreateMap<IEnumerable<DocumentoModel>, IEnumerable<PessoaDocumento>>();
             #endregion
 
             #region .: Contato Mapping :.
-            CreateMap<PessoaContatoModel, PessoaContato>();
-            CreateMap<IEnumerable<PessoaContatoModel>, IEnumerable<PessoaContato>>();
+            CreateMap<ContatoModel, PessoaContato>();
+            CreateMap<IEnumerable<ContatoModel>, IEnumerable<PessoaContato>>();
             #endregion
 
             #region .: Endereço Mapping :.
