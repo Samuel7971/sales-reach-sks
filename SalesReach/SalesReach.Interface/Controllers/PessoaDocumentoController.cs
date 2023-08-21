@@ -83,25 +83,25 @@ namespace SalesReach.Interface.Controllers
             return response > 0 ? ResponseNoContent() : ResponseNotFound("Erro ao atualizar Documento.");
         }
 
-        ///// <summary>
-        ///// Inserir novo documento
-        ///// </summary>
-        ///// <param name="documentoModel"></param>
-        ///// <returns></returns>
-        //[HttpPost()]
-        //[CustomResponse(StatusCodes.Status200OK)]
-        //[CustomResponse(StatusCodes.Status400BadRequest)]
-        //[CustomResponse(StatusCodes.Status404NotFound)]
-        //public async Task<IActionResult> InserirAsync(PessoaDocumentoModel documentoModel)
-        //{
-        //    var modelValidator = _documentoValidator.Validate(documentoModel);
+        /// <summary>
+        /// Inserir novo documento
+        /// </summary>
+        /// <param name="documentoModel"></param>
+        /// <returns></returns>
+        [HttpPost()]
+        [CustomResponse(StatusCodes.Status200OK)]
+        [CustomResponse(StatusCodes.Status400BadRequest)]
+        [CustomResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> InserirAsync(DocumentoModel documentoModel)
+        {
+            var modelValidator = _documentoValidator.Validate(documentoModel);
 
-        //    if (!modelValidator.IsValid)
-        //        return BadRequest(modelValidator.Errors);
+            if (!modelValidator.IsValid)
+                return BadRequest(modelValidator.Errors);
 
-        //    var response = await _documentoService.InserirAsync(documentoModel);
-        //    return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir novo Documento.");
-        //}
+            var response = await _documentoService.InserirAsync(documentoModel);
+            return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir novo Documento.");
+        }
 
         /// <summary>
         /// Verificar se existe por Id

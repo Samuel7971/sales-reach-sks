@@ -85,7 +85,9 @@ namespace SalesReach.Infra.Data.Repositories
         public async Task<int> AtualizarAsync(PessoaContato pessoaContato)
         {
             var sql = $@"UPDATE FitCard_Gestao..PessoaContato_Samuel
-                             SET TelefoneTipoId = @TelefoneTipoId ,Telefone = @Telefone ,Email = @Email
+                             SET TelefoneTipoId = @TelefoneTipoId 
+                                ,Telefone = @Telefone 
+                                ,Email = @Email
                          FROM Contato_Samuel
                          WHERE Id = @Id AND PessoaId = @PessoaId";
             return await _session.Connection.ExecuteAsync(sql, pessoaContato);

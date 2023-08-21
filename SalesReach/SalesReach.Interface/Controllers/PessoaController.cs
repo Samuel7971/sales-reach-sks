@@ -29,6 +29,7 @@ namespace SalesReach.Interface.Controllers
             _pessoaValidator = pessoaValidator;
         }
 
+
         /// <summary>
         /// Buscar todo registro de Pessoa
         /// </summary>
@@ -143,7 +144,5 @@ namespace SalesReach.Interface.Controllers
             var response = await _pessoaService.AtualizarAtivoAsync(id, ativo);
             return response > 0 ? ResponseNoContent() : ResponseNotFound("Não encontrado.");
         }
-
-
     }
 }

@@ -20,6 +20,10 @@ namespace SalesReach.Interface.Controllers
             _pessoaContatoValidator = pessoaContatoValidator;
         }
 
+        /// <summary>
+        /// Buscar todos
+        /// </summary>
+        /// <returns>Lista de contatos</returns>
         [HttpGet()]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
@@ -30,6 +34,11 @@ namespace SalesReach.Interface.Controllers
             return response.Any() ? ResponseOk(response) : ResponseNotFound("Erro ao buscar lista de Contatos");
         }
 
+        /// <summary>
+        /// Buscar contato por Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Contato localizado por Id</returns>
         [HttpGet("{id:int}")]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
@@ -42,6 +51,11 @@ namespace SalesReach.Interface.Controllers
             return response is not null ? ResponseOk(response) : ResponseNotFound("Contato não localizada.");
         }
 
+        /// <summary>
+        /// Buscar contato por Número telefone
+        /// </summary>
+        /// <param name="numero"></param>
+        /// <returns>Contato localizado por número telefone</returns>
         [HttpGet("{numero}")]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
@@ -54,6 +68,11 @@ namespace SalesReach.Interface.Controllers
             return response is not null ? ResponseOk(response) : ResponseNotFound("Contato não localizada.");
         }
 
+        /// <summary>
+        /// Buscar contato por e-mail
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>Contato localizado por e-mail</returns>
         [HttpGet("email/{email}")]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
@@ -66,21 +85,31 @@ namespace SalesReach.Interface.Controllers
             return response is not null ? ResponseOk(response) : ResponseNotFound("E-mail não localizado.");
         }
 
-        //[HttpPost()]
-        //[CustomResponse(StatusCodes.Status200OK)]
-        //[CustomResponse(StatusCodes.Status400BadRequest)]
-        //[CustomResponse(StatusCodes.Status404NotFound)]
-        //public async Task<IActionResult> InserirAsync(PessoaContatoModel contatoModel)
-        //{
-        //    var modelValidator = _pessoaContatoValidator.Validate(contatoModel);
+        /// <summary>
+        /// Inseri novo contato
+        /// </summary>
+        /// <param name="contatoModel"></param>
+        /// <returns>Status code 201</returns>
+        [HttpPost()]
+        [CustomResponse(StatusCodes.Status200OK)]
+        [CustomResponse(StatusCodes.Status400BadRequest)]
+        [CustomResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> InserirAsync(ContatoModel contatoModel)
+        {
+            var modelValidator = _pessoaContatoValidator.Validate(contatoModel);
 
-        //    if (!modelValidator.IsValid) 
-        //        return BadRequest(modelValidator.Errors);
+            if (!modelValidator.IsValid)
+                return BadRequest(modelValidator.Errors);
 
-        //    var response = await _pessoaContatoService.InserirAsync(contatoModel);
-        //    return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir novo Contatos.");
-        //}
+            var response = await _pessoaContatoService.InserirAsync(contatoModel);
+            return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir novo Contatos.");
+        }
 
+        /// <summary>
+        /// Atualiza Contato
+        /// </summary>
+        /// <param name="contatoModel"></param>
+        /// <returns>Status code</returns>
         [HttpPut()]
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
