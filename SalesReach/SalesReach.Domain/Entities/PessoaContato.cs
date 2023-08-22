@@ -66,7 +66,7 @@ namespace SalesReach.Domain.Entities
         }
 
         public static implicit operator string(PessoaContato contato)
-            => $"{contato.Id}, {contato.PessoaId}, {TelefoneTipoExtension.ToStringTelefoneTipo(contato.TelefoneTipoId)}, {contato.Telefone}, {contato.Email}, {contato.DataCadastro}";
+            => $"{contato.Id}, {contato.PessoaId}, {ContatoTipoExtension.ToStringTelefoneTipo(contato.TelefoneTipoId)}, {contato.Telefone}, {contato.Email}, {contato.DataCadastro}";
 
         public static implicit operator PessoaContato(string contato)
         {

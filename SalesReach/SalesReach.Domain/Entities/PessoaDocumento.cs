@@ -37,12 +37,12 @@ namespace SalesReach.Domain.Entities
         }
 
         public static implicit operator string(PessoaDocumento pessoaDocumento)
-           => $"{pessoaDocumento.Id}, {ToStringTipoDocumento(pessoaDocumento.DocumentoTipoId)}, {pessoaDocumento.NumeroDocumento}, {pessoaDocumento.DataCadastro}";
+           => $"{pessoaDocumento.Id}, {DocumentoTipoExtension.ToStringDocumentoTipo(pessoaDocumento.DocumentoTipoId)}, {pessoaDocumento.NumeroDocumento}, {pessoaDocumento.DataCadastro}";
 
         public static implicit operator PessoaDocumento(string documento)
         {
             string[] data = documento.Split(',');
-            return new PessoaDocumento(id: int.Parse(data[0]), documentoTipoId: IntParseTipoDocumento(data[1]), numeroDocumento: data[2], dataCadastro: DateTime.Parse(data[3]));
+            return new PessoaDocumento(id: int.Parse(data[0]), documentoTipoId: DocumentoTipoExtension.IntParseDocumentoTipo(data[1]), numeroDocumento: data[2], dataCadastro: DateTime.Parse(data[3]));
         }
 
         public void Inserir(int id, int documentoTipoId, string numeroDocumento)
@@ -62,23 +62,5 @@ namespace SalesReach.Domain.Entities
             DocumentoTipoId = documentoTipoId;
             NumeroDocumento = numeroDocumento;
         }
-
-        public static string ToStringTipoDocumento(int tipo)
-           => tipo switch
-           {
-               1 => DocumentoTipo.CPF.DisplayName(),
-               2 => DocumentoTipo.RG.DisplayName(),
-               3 => DocumentoTipo.CNPJ.DisplayName(),
-               _ => throw new ArgumentOutOfRangeException(nameof(tipo), "Tipo de documento não cadastrado."),
-           };
-
-        public static int IntParseTipoDocumento(string tipo)
-           => tipo switch
-           {
-               "CPF" => 1,
-               "RG" => 2,
-               "CNPJ" => 3,
-               _ => throw new ArgumentOutOfRangeException(nameof(tipo), "Tipo de documento não cadastrado."),
-           };
     }
 }

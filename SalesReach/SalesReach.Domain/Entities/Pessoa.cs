@@ -34,7 +34,7 @@ namespace SalesReach.Domain.Entities
         }
 
         public static implicit operator string(Pessoa pessoa)
-            => $"{pessoa.Id}, {pessoa.Nome}, {ToStringPessoaTipo(pessoa.PessoaTipoId)}, {pessoa.DataNascimento}, {pessoa.DataCadastro}, {ToStringAtivo(pessoa.Ativo)}";
+            => $"{pessoa.Id}, {pessoa.Nome}, {PessoaTipoExtension.ToStringPessoaTipo(pessoa.PessoaTipoId)}, {pessoa.DataNascimento}, {pessoa.DataCadastro}, {ToStringAtivo(pessoa.Ativo)}";
 
         public static implicit operator Pessoa(string pessoa)
         {
@@ -63,9 +63,6 @@ namespace SalesReach.Domain.Entities
             DataNascimento = dataNascimento;
             Ativo = ativo;
         }
-
-        private static string ToStringPessoaTipo(int pessoaTipoId)
-            => pessoaTipoId == (int)PessoaTipo.Juridica ? PessoaTipo.Juridica.DisplayName() : PessoaTipo.Fisica.DisplayName();
 
         private static string ToStringAtivo(bool ativo) => ativo ? "Ativo" : "Inativo";
 

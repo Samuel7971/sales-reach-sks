@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SalesReach.Domain.Enums.Extensions
 {
-    public static class TelefoneTipoExtension
+    public static class ContatoTipoExtension
     {
         public static string ToStringTelefoneTipo(this int telefoneTipoId)
         => telefoneTipoId switch
