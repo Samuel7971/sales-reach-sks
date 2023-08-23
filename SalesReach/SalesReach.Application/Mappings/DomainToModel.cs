@@ -15,12 +15,12 @@ namespace SalesReach.Application.Mappings
             #endregion
 
             #region .: Documento Mapping :.
-            CreateMap<PessoaDocumento, DocumentoModel>()
+            CreateMap<Documento, DocumentoModel>()
                 .ForMember(model => model.DocumentoTipo, dom => dom.MapFrom(d => DocumentoTipoExtension.ToStringDocumentoTipo(d.DocumentoTipoId)));
             #endregion
 
             #region .: Contato Mapping :.
-            CreateMap<PessoaContato, ContatoModel>()
+            CreateMap<Contato, ContatoModel>()
                 .ForMember(model => model.TelefoneTipo, dom => dom.MapFrom(d => ContatoTipoExtension.ToStringTelefoneTipo(d.TelefoneTipoId)));
             #endregion
 

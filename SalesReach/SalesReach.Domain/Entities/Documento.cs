@@ -6,8 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SalesReach.Domain.Entities
 {
-    [Table("PessoaDocumento_Samuel")]
-    public class PessoaDocumento 
+    [Table("Documento_Samuel")]
+    public class Documento 
     {
         [Key]
         public int Id { get; set; }
@@ -15,9 +15,9 @@ namespace SalesReach.Domain.Entities
         public string NumeroDocumento { get; set; }
         public DateTime DataCadastro { get; private set; } = DateTime.Now;
 
-        public PessoaDocumento() { }
+        public Documento() { }
 
-        public PessoaDocumento(int id, int documentoTipoId, string numeroDocumento, DateTime dataCadastro)
+        public Documento(int id, int documentoTipoId, string numeroDocumento, DateTime dataCadastro)
         {
             IsValidoDocumento(id, documentoTipoId, numeroDocumento);
 
@@ -36,13 +36,13 @@ namespace SalesReach.Domain.Entities
             DomainValidationException.When(numeroDocumento.Length != 9 && documentoTipoId == (int)DocumentoTipo.RG, "RG informado é inválido.");
         }
 
-        public static implicit operator string(PessoaDocumento pessoaDocumento)
+        public static implicit operator string(Documento pessoaDocumento)
            => $"{pessoaDocumento.Id}, {DocumentoTipoExtension.ToStringDocumentoTipo(pessoaDocumento.DocumentoTipoId)}, {pessoaDocumento.NumeroDocumento}, {pessoaDocumento.DataCadastro}";
 
-        public static implicit operator PessoaDocumento(string documento)
+        public static implicit operator Documento(string documento)
         {
             string[] data = documento.Split(',');
-            return new PessoaDocumento(id: int.Parse(data[0]), documentoTipoId: DocumentoTipoExtension.IntParseDocumentoTipo(data[1]), numeroDocumento: data[2], dataCadastro: DateTime.Parse(data[3]));
+            return new Documento(id: int.Parse(data[0]), documentoTipoId: DocumentoTipoExtension.IntParseDocumentoTipo(data[1]), numeroDocumento: data[2], dataCadastro: DateTime.Parse(data[3]));
         }
 
         public void Inserir(int id, int documentoTipoId, string numeroDocumento)

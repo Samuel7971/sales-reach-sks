@@ -42,7 +42,7 @@ namespace SalesReach.Application.Services
 
         public async Task<int> InserirAsync(DocumentoModel documentoModel)
         {
-            var documento = new PessoaDocumento();
+            var documento = new Documento();
 
             documento.Inserir(documentoModel.Id, documentoModel.DocumentoTipoId, documentoModel.NumeroDocumento);
 

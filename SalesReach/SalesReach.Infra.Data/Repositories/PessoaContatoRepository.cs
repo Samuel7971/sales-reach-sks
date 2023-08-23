@@ -13,7 +13,7 @@ namespace SalesReach.Infra.Data.Repositories
             _session = session;
         }
 
-        public async Task<IEnumerable<PessoaContato>> BuscarTodosAsync()
+        public async Task<IEnumerable<Contato>> BuscarTodosAsync()
         {
             var sql = $@"SELECT 
                                 Id
@@ -23,10 +23,10 @@ namespace SalesReach.Infra.Data.Repositories
                          	  , Email
                          	  , DataCadastro 
                          FROM FitCard_Gestao..Contato_Samuel";
-            return await _session.Connection.QueryAsync<PessoaContato>(sql);
+            return await _session.Connection.QueryAsync<Contato>(sql);
         }
 
-        public async Task<PessoaContato> BuscarPorEmailAsync(string email)
+        public async Task<Contato> BuscarPorEmailAsync(string email)
         {
             var sql = $@"SELECT 
                                 Id
@@ -37,10 +37,10 @@ namespace SalesReach.Infra.Data.Repositories
                          	  , DataCadastro 
                          FROM FitCard_Gestao..Contato_Samuel
                          WHERE Email = @email";
-            return await _session.Connection.QueryFirstAsync<PessoaContato>(sql, new { email });
+            return await _session.Connection.QueryFirstAsync<Contato>(sql, new { email });
         }
 
-        public async Task<PessoaContato> BuscarPorIdAsync(int id)
+        public async Task<Contato> BuscarPorIdAsync(int id)
         {
             var sql = $@"SELECT 
                                 Id
@@ -51,10 +51,10 @@ namespace SalesReach.Infra.Data.Repositories
                          	  , DataCadastro 
                          FROM FitCard_Gestao..Contato_Samuel
                          WHERE Id = @id";
-            return await _session.Connection.QueryFirstAsync<PessoaContato>(sql, new { id });
+            return await _session.Connection.QueryFirstAsync<Contato>(sql, new { id });
         }
 
-        public async Task<PessoaContato> BuscarPorNumeroAsync(string numero)
+        public async Task<Contato> BuscarPorNumeroAsync(string numero)
         {
             var sql = $@"SELECT 
                                 Id
@@ -65,10 +65,10 @@ namespace SalesReach.Infra.Data.Repositories
                          	  , DataCadastro 
                          FROM FitCard_Gestao..Contato_Samuel
                          WHERE Telefone = @numero";
-            return await _session.Connection.QueryFirstAsync<PessoaContato>(sql, new { numero });
+            return await _session.Connection.QueryFirstAsync<Contato>(sql, new { numero });
         }
 
-        public async Task<PessoaContato> BuscarPorPessoaIdAsync(int pessoaId)
+        public async Task<Contato> BuscarPorPessoaIdAsync(int pessoaId)
         {
             var sql = $@"SELECT 
                                 Id
@@ -79,10 +79,10 @@ namespace SalesReach.Infra.Data.Repositories
                          	  , DataCadastro 
                          FROM FitCard_Gestao..Contato_Samuel
                          WHERE PessoaId = @pessoaId";
-            return await _session.Connection.QueryFirstAsync<PessoaContato>(sql, new { pessoaId });
+            return await _session.Connection.QueryFirstAsync<Contato>(sql, new { pessoaId });
         }
 
-        public async Task<int> AtualizarAsync(PessoaContato pessoaContato)
+        public async Task<int> AtualizarAsync(Contato pessoaContato)
         {
             var sql = $@"UPDATE FitCard_Gestao..PessoaContato_Samuel
                              SET TelefoneTipoId = @TelefoneTipoId 
@@ -93,7 +93,7 @@ namespace SalesReach.Infra.Data.Repositories
             return await _session.Connection.ExecuteAsync(sql, pessoaContato);
         }
 
-        public async Task<int> InserirAsync(PessoaContato pessoaContato)
+        public async Task<int> InserirAsync(Contato pessoaContato)
         {
             var sql = $@"INSERT INTO FitCard_Gestao..Contato_Samuel(PessoaId, TeleFoneTipoId, Telefone, Email, DataCadastro)
                           VALUES(@PessoaId, @TelefoneTipoId, @Telefone, @Email, GETDATE())";

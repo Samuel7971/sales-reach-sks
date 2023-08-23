@@ -9,12 +9,12 @@ namespace SalesReach.Domain.Repositories
 {
     public interface IPessoaContatoRepository
     {
-        Task<IEnumerable<PessoaContato>> BuscarTodosAsync();
-        Task<PessoaContato> BuscarPorIdAsync(int id);
-        Task<PessoaContato> BuscarPorNumeroAsync(string numero);
-        Task<PessoaContato> BuscarPorEmailAsync(string email);
-        Task<PessoaContato> BuscarPorPessoaIdAsync(int pessoaId);
-        Task<int> AtualizarAsync(PessoaContato pessoaContato);
-        Task<int> InserirAsync(PessoaContato pessoaContato);
+        Task<IEnumerable<Contato>> BuscarTodosAsync();
+        Task<Contato> BuscarPorIdAsync(int id);
+        Task<Contato> BuscarPorNumeroAsync(string numero);
+        Task<Contato> BuscarPorEmailAsync(string email);
+        Task<Contato> BuscarPorPessoaIdAsync(int pessoaId);
+        Task<int> AtualizarAsync(Contato pessoaContato);
+        Task<int> InserirAsync(Contato pessoaContato);
     }
 }

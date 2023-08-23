@@ -39,7 +39,7 @@ namespace SalesReach.Domain.Entities
         public static implicit operator Pessoa(string pessoa)
         {
             var data = pessoa.Split(',');
-            return new Pessoa(id: int.Parse(data[0]), nome: data[1], pessoaTipoId: int.Parse(data[2]), dataNascimento: DateTime.Parse(data[3]), ativo: bool.Parse(data[4]), dataCadastro: DateTime.Parse(data[5]));
+            return new Pessoa(id: int.Parse(data[0]), nome: data[1], pessoaTipoId: int.Parse(data[2]), dataNascimento: DateTime.Parse(data[3]), ativo: ToBoolAtivo(data[4]), dataCadastro: DateTime.Parse(data[5]));
         }
 
         public void Inserir(string nome, int pessoaTipoId, DateTime dataNascimento, bool ativo)
@@ -65,6 +65,8 @@ namespace SalesReach.Domain.Entities
         }
 
         private static string ToStringAtivo(bool ativo) => ativo ? "Ativo" : "Inativo";
+
+        private static bool ToBoolAtivo(string ativo) => ativo.Equals("Ativo");
 
         private bool IsValidaDataNascimento(DateTime dataNascimento)
             => dataNascimento <= DateTime.Now.AddYears(-16); 

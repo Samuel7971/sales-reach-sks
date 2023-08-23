@@ -6,8 +6,8 @@ using System.Text.RegularExpressions;
 
 namespace SalesReach.Domain.Entities
 {
-    [Table("PessoaContato_Samuel")]
-    public class PessoaContato 
+    [Table("Contato_Samuel")]
+    public class Contato 
     {
         [Key]
         public int Id { get; private set; }
@@ -17,9 +17,9 @@ namespace SalesReach.Domain.Entities
         public string Email { get; private set; }
         public DateTime DataCadastro { get; private set; } = DateTime.Now;
 
-        public PessoaContato() { }
+        public Contato() { }
 
-        public PessoaContato(int id, int pessoaId, int telefoneTipoId, string telefone, string email, DateTime dataCadastro)
+        public Contato(int id, int pessoaId, int telefoneTipoId, string telefone, string email, DateTime dataCadastro)
         {
             IsValidoContato(pessoaId, telefoneTipoId, telefone, email);
 
@@ -65,14 +65,14 @@ namespace SalesReach.Domain.Entities
             }
         }
 
-        public static implicit operator string(PessoaContato contato)
+        public static implicit operator string(Contato contato)
             => $"{contato.Id}, {contato.PessoaId}, {ContatoTipoExtension.ToStringTelefoneTipo(contato.TelefoneTipoId)}, {contato.Telefone}, {contato.Email}, {contato.DataCadastro}";
 
-        public static implicit operator PessoaContato(string contato)
+        public static implicit operator Contato(string contato)
         {
             var data = contato.Split(',');
 
-            return new PessoaContato(
+            return new Contato(
                                       int.Parse(data[0]),
                                       int.Parse(data[1]),
                                       int.Parse(data[2]),

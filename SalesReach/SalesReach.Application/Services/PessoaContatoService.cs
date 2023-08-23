@@ -43,7 +43,7 @@ namespace SalesReach.Application.Services
 
         public async Task<int> InserirAsync(ContatoModel contatoModel)
         {
-            var contato = new PessoaContato();
+            var contato = new Contato();
 
             contato.Inserri(contatoModel.PessoaId, contatoModel.TelefoneTipoId, contatoModel.Telefone, contatoModel.Email);
             return await _contatoRepository.InserirAsync(contato);

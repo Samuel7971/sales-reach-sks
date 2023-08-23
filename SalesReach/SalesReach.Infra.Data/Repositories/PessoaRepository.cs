@@ -67,8 +67,7 @@ namespace SalesReach.Infra.Data.Repositories
             var sql = $@"INSERT INTO FitCard_Gestao..Pessoa_Samuel(Nome, PessoaTipoId, DataNascimento, Ativo, DataCadastro)
                                 VALUES(@Nome, @PessoaTipoId, @DataNascimento, @Ativo, GETDATE());
                          SELECT @@IDENTITY";
-            var retorno =  await _session.Connection.ExecuteScalarAsync<int>(sql, pessoa, _session.Transaction);
-            return retorno;
+            return  await _session.Connection.ExecuteScalarAsync<int>(sql, pessoa, _session.Transaction);
         }
     }
 }
