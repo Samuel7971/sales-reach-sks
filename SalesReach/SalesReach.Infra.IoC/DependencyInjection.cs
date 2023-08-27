@@ -25,6 +25,8 @@ namespace SalesReach.Infra.IoC
             services.AddAutoMapper(typeof(DomainToModel));
             services.AddAutoMapper(typeof(ModelToDomain));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IClienteService, ClienteService>();
+            services.AddTransient<IClienteRepository, ClienteRepository>();
             services.AddTransient<IPessoaService, PessoaService>();
             services.AddTransient<IPessoaRepository, PessoaRepository>();
             services.AddTransient<IPessoaDocumentoService, PessoaDocumentoService>();

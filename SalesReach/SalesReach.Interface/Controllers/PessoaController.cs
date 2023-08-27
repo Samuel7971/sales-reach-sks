@@ -142,7 +142,7 @@ namespace SalesReach.Interface.Controllers
         public async Task<IActionResult> AtualizarAtivoAsync(int id, bool ativo)
         {
             var response = await _pessoaService.AtualizarAtivoAsync(id, ativo);
-            return response > 0 ? ResponseNoContent() : ResponseNotFound("Não encontrado.");
+            return response > 0 ? ResponseNoContent() : ResponseNotFound("Pessoa não atualizada.");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SalesReach.Application.Models;
+using SalesReach.Application.ViewModels;
 using SalesReach.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,10 @@ namespace SalesReach.Application.Mappings
     {
         public ModelToDomain()
         {
+            #region
+            CreateMap<ClienteModel, Cliente>();
+            CreateMap<IEnumerable<ClienteModel>, IEnumerable<Cliente>>();
+            #endregion
             #region .: Pessoa Mapping
             CreateMap<PessoaViewModel, Pessoa>();
             CreateMap<IEnumerable<PessoaViewModel>, IEnumerable<Pessoa>>();

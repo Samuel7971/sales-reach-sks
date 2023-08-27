@@ -47,12 +47,9 @@ namespace SalesReach.Domain.Entities
             Ativo = ativo;
         }
 
-        public void Atualizar(int id, int pessoaId, bool ativo)
+        public void AtualizarAtivo(int id, bool ativo)
         {
-            IsValidoCliente(pessoaId);
-
             Id = id;
-            PessoaId = pessoaId;
             Ativo = ativo;
         }
 

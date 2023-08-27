@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SalesReach.Application.Models;
+using SalesReach.Application.ViewModels;
 using SalesReach.Domain.Entities;
 using SalesReach.Domain.Enums.Extensions;
 
@@ -9,6 +10,9 @@ namespace SalesReach.Application.Mappings
     {
         public DomainToModel()
         {
+            #region
+            CreateMap<Cliente, ClienteModel>();
+            #endregion
             #region .: Pessoa Mapping :.
             CreateMap<Pessoa, PessoaViewModel>()
                 .ForMember(model => model.PessoaTipo, dom => dom.MapFrom(d => PessoaTipoExtension.ToStringPessoaTipo(d.PessoaTipoId)));

@@ -1,6 +1,8 @@
-﻿namespace SalesReach.Application.Models
+﻿using SalesReach.Application.Models;
+
+namespace SalesReach.Application.ViewModels
 {
-    public class PessoaViewModel 
+    public class PessoaViewModel
     {
         public int Id { get; set; }
         public string Nome { get; set; }

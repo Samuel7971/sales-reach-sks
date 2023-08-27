@@ -3,6 +3,7 @@ using SalesReach.Application.Models;
 using SalesReach.Application.Models.RequestModels;
 using SalesReach.Application.Models.ResponseModels;
 using SalesReach.Application.Services.Interfaces;
+using SalesReach.Application.ViewModels;
 using SalesReach.Domain.Entities;
 using SalesReach.Domain.Repositories;
 using SalesReach.Domain.Repositories.UnitOfWork.Interface;

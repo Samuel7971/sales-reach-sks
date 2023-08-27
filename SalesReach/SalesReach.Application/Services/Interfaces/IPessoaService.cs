@@ -1,6 +1,7 @@
 ﻿using SalesReach.Application.Models;
 using SalesReach.Application.Models.RequestModels;
 using SalesReach.Application.Models.ResponseModels;
+using SalesReach.Application.ViewModels;
 
 namespace SalesReach.Application.Services.Interfaces
 {
