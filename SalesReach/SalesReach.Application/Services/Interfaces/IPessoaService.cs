@@ -7,9 +7,9 @@ namespace SalesReach.Application.Services.Interfaces
 {
     public interface IPessoaService
     {
-        Task<IEnumerable<PessoaViewModel>> BuscarTodosAsync();
-        Task<PessoaViewModel> BuscarPorIdAsync(int id);
-        Task<PessoaViewModel> BuscarPorNomeAsync(string nome);
+        Task<IEnumerable<PessoaModel>> BuscarTodosAsync();
+        Task<PessoaModel> BuscarPorIdAsync(int id);
+        Task<PessoaModel> BuscarPorNomeAsync(string nome);
         Task<PessoaInserirResponseViewModel> InserirAsync(PessoaRequestModel pessoa);
         Task<int> AtualizarAsync(PessoaModel pessoa);
         Task<bool> VerificarSeExisteAsync(int id);

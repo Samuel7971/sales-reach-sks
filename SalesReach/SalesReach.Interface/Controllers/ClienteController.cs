@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.ResponseCaching;
 using SalesReach.Application.Models;
 using SalesReach.Application.Services.Interfaces;
+using SalesReach.Application.ViewModels;
 using SalesReach.Interface.Attributes;
 using SalesReach.Interface.Controllers.Shared;
 
@@ -42,8 +43,68 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> BuscarPorIdAsync(int id)
         {
-            var response = await _clienteService.BuscarPorIdAsync(id);
-            return response is not null ? ResponseOk(response) : ResponseNotFound("Cliente não localizado.");
+            if (id <= 0)
+                return ResponseBadRequest("Id informado é inválido.");
+
+            try
+            {
+                var response = await _clienteService.BuscarPorIdAsync(id);
+                return response?.Cliente?.Id > 0 ? ResponseOk(response) : ResponseOk();
+            }
+            catch (Exception ex)
+            {
+                return ResponseNotFound($"ERROR: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Buscar Cliente por nome
+        /// </summary>
+        /// <param name="nome"></param>
+        /// <returns>Retorna Cliente</returns>
+        [HttpGet("nome/{nome}")]
+        [CustomResponse(StatusCodes.Status200OK)]
+        [CustomResponse(StatusCodes.Status400BadRequest)]
+        [CustomResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> BuscarClientePorNome(string nome)
+        {
+            if (string.IsNullOrWhiteSpace(nome))
+                return ResponseBadRequest("Nome informado é inválido.");
+
+            try
+            {
+                var response = await _clienteService.BuscarClientePorNome(nome);
+                return response?.Cliente?.Id > 0 ? ResponseOk(response) : ResponseOk();
+            }
+            catch (Exception ex)
+            {
+                return ResponseNotFound($"ERROR: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Buscar endereço cliente por CEP
+        /// </summary>
+        /// <param name="cep"></param>
+        /// <returns></returns>
+        [HttpGet("endereco/cep/{cep}")]
+        [CustomResponse(StatusCodes.Status200OK)]
+        [CustomResponse(StatusCodes.Status400BadRequest)]
+        [CustomResponse(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> BuscarClientePorCepAsync(string cep)
+        {
+            if (string.IsNullOrWhiteSpace(cep))
+                return ResponseBadRequest("CEP informado é inválido.");
+
+            try
+            {
+                var response = await _clienteService.BuscarClientePorCepAsync(cep);
+                return response?.Cliente?.Id > 0 ? ResponseOk(response) : ResponseOk();
+            }
+            catch (Exception ex)
+            {
+                return ResponseNotFound($"ERROR: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -76,5 +137,7 @@ namespace SalesReach.Interface.Controllers
             var response = await _clienteService.InserirAsync(clienteModel);
             return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir cliente.");
         }
+
+        
     }
 }

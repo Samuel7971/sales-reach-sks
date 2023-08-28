@@ -14,13 +14,14 @@ namespace SalesReach.Application.Mappings
     {
         public ModelToDomain()
         {
-            #region
+            #region .: Cliente Mapping :.
             CreateMap<ClienteModel, Cliente>();
             CreateMap<IEnumerable<ClienteModel>, IEnumerable<Cliente>>();
             #endregion
+
             #region .: Pessoa Mapping
-            CreateMap<PessoaViewModel, Pessoa>();
-            CreateMap<IEnumerable<PessoaViewModel>, IEnumerable<Pessoa>>();
+            CreateMap<PessoaModel, Pessoa>();
+            CreateMap<IEnumerable<PessoaModel>, IEnumerable<Pessoa>>();
             #endregion
 
             #region .: Documento Mapping :.

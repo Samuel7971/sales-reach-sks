@@ -13,8 +13,9 @@ namespace SalesReach.Application.Mappings
             #region
             CreateMap<Cliente, ClienteModel>();
             #endregion
+
             #region .: Pessoa Mapping :.
-            CreateMap<Pessoa, PessoaViewModel>()
+            CreateMap<Pessoa, PessoaModel>()
                 .ForMember(model => model.PessoaTipo, dom => dom.MapFrom(d => PessoaTipoExtension.ToStringPessoaTipo(d.PessoaTipoId)));
             #endregion
 

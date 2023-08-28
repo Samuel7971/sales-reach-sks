@@ -29,58 +29,13 @@ namespace SalesReach.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PessoaViewModel>> BuscarTodosAsync()
-        {
-            var pessoas = _mapper.Map<IEnumerable<PessoaViewModel>>(await _pessoaRepository.BuscarTodosAsync()).ToList();
+        public async Task<IEnumerable<PessoaModel>> BuscarTodosAsync() => _mapper.Map<IEnumerable<PessoaModel>>(await _pessoaRepository.BuscarTodosAsync());
 
-            var documentos = new List<DocumentoModel>();
-            var contatos = new List<ContatoModel>();
-            var enderecos = new List<EnderecoModel>();
+        public async Task<PessoaModel> BuscarPorIdAsync(int id) 
+            => _mapper.Map<PessoaModel>(await _pessoaRepository.BuscarPorIdAsync(id));
 
-            await Task.WhenAll
-                (
-                   Task.Run(async () => documentos = _mapper.Map<IEnumerable<DocumentoModel>>(await _documentoService.BuscarTodosAsync()).ToList()),
-                   Task.Run(async () => contatos = _mapper.Map<IEnumerable<ContatoModel>>(await _contatoService.BuscarTodosAsync()).ToList()),
-                   Task.Run(async () => enderecos = _mapper.Map<IEnumerable<EnderecoModel>>(await _enderecoService.BuscarTodosAsync()).ToList())
-                );
-
-            pessoas.ForEach(x =>
-            {
-                x.Documento = documentos.Where(d => d.Id == x.Id).Select(d => d).First() ?? new DocumentoModel();
-                x.Contato =  contatos.Where(c => c.PessoaId == x.Id).Select(c => c).First() ?? new ContatoModel();
-                x.Endereco = enderecos.Where(e => e.PessoaId == x.Id).Select(e => e).First() ?? new EnderecoModel();
-            });
-
-            return pessoas;
-        }
-
-        public async Task<PessoaViewModel> BuscarPorIdAsync(int id)
-        {
-            var pessoa = _mapper.Map<PessoaViewModel>(await _pessoaRepository.BuscarPorIdAsync(id));
-
-            await Task.WhenAll
-                (
-                   Task.Run(async () => pessoa.Documento = _mapper.Map<DocumentoModel>(await _documentoService.BuscarPorIdAsync(pessoa.Id)) ?? new DocumentoModel()),
-                   Task.Run(async () => pessoa.Contato = _mapper.Map<ContatoModel>(await _contatoService.BuscarPorPessoaIdAsync(pessoa.Id)) ?? new ContatoModel()),
-                   Task.Run(async () => pessoa.Endereco = _mapper.Map<EnderecoModel>(await _enderecoService.BuscarPorPessoaIdAsync(pessoa.Id)) ?? new EnderecoModel())
-                );
-
-            return pessoa;
-        }
-
-        public async Task<PessoaViewModel> BuscarPorNomeAsync(string nome)
-        {
-            var pessoa = _mapper.Map<PessoaViewModel>(await _pessoaRepository.BuscarPorNomeAsync(nome));
-
-            await Task.WhenAll
-               (
-                  Task.Run(async () => pessoa.Documento = _mapper.Map<DocumentoModel>(await _documentoService.BuscarPorIdAsync(pessoa.Id)) ?? new DocumentoModel()),
-                  Task.Run(async () => pessoa.Contato = _mapper.Map<ContatoModel>(await _contatoService.BuscarPorPessoaIdAsync(pessoa.Id)) ?? new ContatoModel()),
-                  Task.Run(async () => pessoa.Endereco = _mapper.Map<EnderecoModel>(await _enderecoService.BuscarPorPessoaIdAsync(pessoa.Id)) ?? new EnderecoModel())
-               );
-
-            return pessoa;
-        }
+        public async Task<PessoaModel> BuscarPorNomeAsync(string nome) 
+            => _mapper.Map<PessoaModel>(await _pessoaRepository.BuscarPorNomeAsync(nome));
 
         public async Task<int> AtualizarAsync(PessoaModel pessoaModel)
         {

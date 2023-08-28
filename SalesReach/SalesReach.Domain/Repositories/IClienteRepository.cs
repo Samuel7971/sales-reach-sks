@@ -11,6 +11,7 @@ namespace SalesReach.Domain.Repositories
     {
         Task<IEnumerable<Cliente>> BuscarTodosAsync();
         Task<Cliente> BuscarPorIdAsync(int id);
+        Task<Cliente> BuscarPorPessoaIdAsync(int pessoaId);
         Task<int> AtualizarAtivoAsync(int id, bool ativo);
         Task<int> InserirAsync(Cliente cliente);
     }

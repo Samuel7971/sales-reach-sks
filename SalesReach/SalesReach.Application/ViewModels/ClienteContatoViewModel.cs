@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace SalesReach.Application.ViewModels
 {
-    public class ClientePessoaViewModel
+    public class ClienteContatoViewModel
     {
         public ClienteModel Cliente { get; set; }
-        public PessoaModel Pessoa { get; set; }
-        public DocumentoModel Documento { get; set; }
+        public ContatoModel Contato { get; set; }
     }
 }

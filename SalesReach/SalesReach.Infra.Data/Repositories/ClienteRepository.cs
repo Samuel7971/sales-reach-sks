@@ -36,6 +36,18 @@ namespace SalesReach.Infra.Data.Repositories
             return await _session.Connection.QuerySingleOrDefaultAsync<Cliente>(sql, new { id });
         }
 
+        public async Task<Cliente> BuscarPorPessoaIdAsync(int pessoaId)
+        {
+            var sql = $@"SELECT 
+                             Id
+                            ,PessoaId
+                            ,Ativo
+                            ,DataCadastro 
+                         FROM FitCard_Gestao..Cliente_Samuel WHERE PessoaId = @pessoaId";
+
+            return await _session.Connection.QuerySingleOrDefaultAsync<Cliente>(sql, new { pessoaId });
+        }
+
         public async Task<int> AtualizarAtivoAsync(int id, bool ativo)
         {
             var sql = $@"UPDATE FitCard_Gestao..Cliente_Samuel
