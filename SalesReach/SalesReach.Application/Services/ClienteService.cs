@@ -18,20 +18,20 @@ namespace SalesReach.Application.Services
         private readonly IClienteRepository _clienteRepository;
         private readonly IPessoaService _pessoaService;
         private readonly IPessoaDocumentoService _documentoService;
-        private readonly IEnderecoService _enderecoService;
         private readonly IMapper _mapper;
-        public ClienteService(IClienteRepository clienteRepository, IPessoaService pessoaService, IPessoaDocumentoService documentoService, IEnderecoService enderecoService, IMapper mapper)
+        public ClienteService(IClienteRepository clienteRepository, IPessoaService pessoaService, IPessoaDocumentoService documentoService, IMapper mapper)
         {
             _clienteRepository = clienteRepository;
             _pessoaService = pessoaService;
             _documentoService = documentoService;
-            _enderecoService = enderecoService;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ClienteModel>> BuscarTodosAsync() => _mapper.Map<IEnumerable<ClienteModel>>(await _clienteRepository.BuscarTodosAsync());
+        public async Task<IEnumerable<ClienteModel>> BuscarTodosAsync() 
+            => _mapper.Map<IEnumerable<ClienteModel>>(await _clienteRepository.BuscarTodosAsync());
 
-        public async Task<ClienteModel> BuscarPorPessoaIdAsync(int pessoaId) => _mapper.Map<ClienteModel>(await _clienteRepository.BuscarPorPessoaIdAsync(pessoaId));
+        public async Task<ClienteModel> BuscarClientePorPessoaIdAsync(int pessoaId) 
+            => _mapper.Map<ClienteModel>(await _clienteRepository.BuscarClientePorPessoaIdAsync(pessoaId));
 
         public async Task<ClientePessoaViewModel> BuscarPorIdAsync(int id) 
         {
@@ -55,11 +55,18 @@ namespace SalesReach.Application.Services
         {
             var novoCliente = new Cliente();
 
-            var pessoa = await _pessoaService.InserirAsync(clienteModel.Pessoa);
+            try
+            {
+                var pessoa = await _pessoaService.InserirAsync(clienteModel.Pessoa);
 
-            novoCliente.Inserir(pessoa.Pessoa.Id, pessoa.Pessoa.Ativo);
+                novoCliente.Inserir(pessoa.Pessoa.Id, pessoa.Pessoa.Ativo);
 
-            return await _clienteRepository.InserirAsync(novoCliente);
+                return await _clienteRepository.InserirAsync(novoCliente);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<int> AtualizarAtivoAsync(int id, bool ativo)
@@ -79,7 +86,7 @@ namespace SalesReach.Application.Services
 
             await Task.WhenAll
                 (
-                   Task.Run(async () => clientePessoa.Cliente = _mapper.Map<ClienteModel>(await _clienteRepository.BuscarPorPessoaIdAsync(clientePessoa.Pessoa.Id))),
+                   Task.Run(async () => clientePessoa.Cliente = _mapper.Map<ClienteModel>(await _clienteRepository.BuscarClientePorPessoaIdAsync(clientePessoa.Pessoa.Id))),
                    Task.Run(async () => clientePessoa.Documento = _mapper.Map<DocumentoModel>(await _documentoService.BuscarPorIdAsync(clientePessoa.Pessoa.Id)) ?? new DocumentoModel())
                 );
 
@@ -87,19 +94,6 @@ namespace SalesReach.Application.Services
                 return new ClientePessoaViewModel();
 
             return clientePessoa;
-        }
-
-        public async Task<ClienteEnderecoViewModel> BuscarClientePorCepAsync(string cep)
-        {
-            var clienteEndereco = new ClienteEnderecoViewModel();
-
-            clienteEndereco.Endereco = _mapper.Map<EnderecoModel>(await _enderecoService.BuscarPorCEPAsync(cep)) ?? new EnderecoModel();
-            clienteEndereco.Cliente = _mapper.Map<ClienteModel>(await _clienteRepository.BuscarPorPessoaIdAsync(clienteEndereco.Endereco.Id)) ??  new ClienteModel();
-
-            if (clienteEndereco.Cliente.Id <= 0)
-                return new ClienteEnderecoViewModel();
-
-            return clienteEndereco;
         }
     }
 }

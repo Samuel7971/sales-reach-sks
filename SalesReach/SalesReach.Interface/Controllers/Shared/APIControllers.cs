@@ -28,6 +28,9 @@ namespace SalesReach.Interface.Controllers.Shared
         protected IActionResult ResponseBadRequest(string errorMessage) =>
             Response(HttpStatusCode.BadRequest, errorMessage: errorMessage);
 
+        protected IActionResult ResponseBadRequest(object objErros)
+            => Response(HttpStatusCode.BadRequest, objErros);
+
         protected IActionResult ResponseBadRequest() =>
             Response(HttpStatusCode.BadRequest, errorMessage: "A requisição é inválida");
 

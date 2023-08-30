@@ -88,10 +88,17 @@ namespace SalesReach.Interface.Controllers
             var modelValidator = _pessoaRequestValidator.Validate(pessoaModel);
 
             if (!modelValidator.IsValid)
-                return BadRequest(modelValidator.Errors);
+                return ResponseBadRequest(modelValidator.Errors);
 
-            var response = await _pessoaService.InserirAsync(pessoaModel);
-            return response is not null ? ResponseCreated(response) : ResponseBadRequest("Erro ao inserir novo Pessoa.");
+            try
+            {
+                var response = await _pessoaService.InserirAsync(pessoaModel);
+                return response is not null ? ResponseCreated(response) : ResponseBadRequest("Erro ao inserir novo Pessoa.");
+            }
+            catch (Exception ex)
+            {
+                return ResponseNotFound($"ERROR: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -108,7 +115,7 @@ namespace SalesReach.Interface.Controllers
             var modelValidator = _pessoaValidator.Validate(pessoaModel);
 
             if (!modelValidator.IsValid)
-                return BadRequest(modelValidator.Errors);
+                return ResponseBadRequest(modelValidator.Errors);
 
             var response =  await _pessoaService.AtualizarAsync(pessoaModel);
             return response > 0 ? ResponseNoContent() : ResponseBadRequest("Erro ao atualizar pessoa.");

@@ -10,7 +10,7 @@ namespace SalesReach.Application.Services.Interfaces
         Task<IEnumerable<PessoaModel>> BuscarTodosAsync();
         Task<PessoaModel> BuscarPorIdAsync(int id);
         Task<PessoaModel> BuscarPorNomeAsync(string nome);
-        Task<PessoaInserirResponseViewModel> InserirAsync(PessoaRequestModel pessoa);
+        Task<PessoaResponseModel> InserirAsync(PessoaRequestModel pessoa);
         Task<int> AtualizarAsync(PessoaModel pessoa);
         Task<bool> VerificarSeExisteAsync(int id);
         Task<int> AtualizarAtivoAsync(int id, bool ativo);

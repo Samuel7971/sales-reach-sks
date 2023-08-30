@@ -36,7 +36,7 @@ namespace SalesReach.Infra.Data.Repositories
             return await _session.Connection.QuerySingleOrDefaultAsync<Cliente>(sql, new { id });
         }
 
-        public async Task<Cliente> BuscarPorPessoaIdAsync(int pessoaId)
+        public async Task<Cliente> BuscarClientePorPessoaIdAsync(int pessoaId)
         {
             var sql = $@"SELECT 
                              Id

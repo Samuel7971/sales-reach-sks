@@ -29,7 +29,8 @@ namespace SalesReach.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PessoaModel>> BuscarTodosAsync() => _mapper.Map<IEnumerable<PessoaModel>>(await _pessoaRepository.BuscarTodosAsync());
+        public async Task<IEnumerable<PessoaModel>> BuscarTodosAsync() 
+            => _mapper.Map<IEnumerable<PessoaModel>>(await _pessoaRepository.BuscarTodosAsync());
 
         public async Task<PessoaModel> BuscarPorIdAsync(int id) 
             => _mapper.Map<PessoaModel>(await _pessoaRepository.BuscarPorIdAsync(id));
@@ -64,10 +65,10 @@ namespace SalesReach.Application.Services
             return await _pessoaRepository.AtualizarAsync(pessoa);
         }
 
-        public async Task<PessoaInserirResponseViewModel> InserirAsync(PessoaRequestModel pessoaModel)
+        public async Task<PessoaResponseModel> InserirAsync(PessoaRequestModel pessoaModel)
         {
             var pessoa = new Pessoa();
-            var novaPessoa = new PessoaInserirResponseViewModel();
+            var novaPessoa = new PessoaResponseModel();
 
             var novoDocumento = await _documentoService.BuscarPorNumeroAsync(pessoaModel.Documento.NumeroDocumento);
 

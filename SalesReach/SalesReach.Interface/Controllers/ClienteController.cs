@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCaching;
 using SalesReach.Application.Models;
+using SalesReach.Application.Models.RequestModels;
 using SalesReach.Application.Services.Interfaces;
 using SalesReach.Application.ViewModels;
 using SalesReach.Interface.Attributes;
@@ -13,7 +15,8 @@ namespace SalesReach.Interface.Controllers
     public class ClienteController : APIControllers
     {
         private readonly IClienteService _clienteService;
-        public ClienteController(IClienteService clienteService)
+        private readonly IValidator<ClienteRequestModel> _pessoaValidator;
+        public ClienteController(IClienteService clienteService, IValidator<ClienteRequestModel> pessoaRequestValidator)
         {
             _clienteService = clienteService;
         }
@@ -83,31 +86,6 @@ namespace SalesReach.Interface.Controllers
         }
 
         /// <summary>
-        /// Buscar endereço cliente por CEP
-        /// </summary>
-        /// <param name="cep"></param>
-        /// <returns></returns>
-        [HttpGet("endereco/cep/{cep}")]
-        [CustomResponse(StatusCodes.Status200OK)]
-        [CustomResponse(StatusCodes.Status400BadRequest)]
-        [CustomResponse(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> BuscarClientePorCepAsync(string cep)
-        {
-            if (string.IsNullOrWhiteSpace(cep))
-                return ResponseBadRequest("CEP informado é inválido.");
-
-            try
-            {
-                var response = await _clienteService.BuscarClientePorCepAsync(cep);
-                return response?.Cliente?.Id > 0 ? ResponseOk(response) : ResponseOk();
-            }
-            catch (Exception ex)
-            {
-                return ResponseNotFound($"ERROR: {ex.Message}");
-            }
-        }
-
-        /// <summary>
         /// Ativar ou Inativar Cliente
         /// </summary>
         /// <param name="id"></param>
@@ -132,12 +110,22 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
         [CustomResponse(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> InserirAsync(ClienteModel clienteModel)
+        public async Task<IActionResult> InserirAsync(ClienteRequestModel clienteModel)
         {
-            var response = await _clienteService.InserirAsync(clienteModel);
-            return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir cliente.");
-        }
+            var modelValidator = _pessoaValidator.Validate(clienteModel);
 
-        
+            if (!modelValidator.IsValid)
+                return ResponseBadRequest(modelValidator.Errors);
+
+            try
+            {
+                var response = await _clienteService.InserirAsync(clienteModel);
+                return response > 0 ? ResponseCreated() : ResponseBadRequest("Erro ao inserir novo Cliente.");
+            }
+            catch (Exception ex)
+            {
+                return ResponseNotFound($"ERROR: {ex.Message}");
+            }
+        }
     }
 }
