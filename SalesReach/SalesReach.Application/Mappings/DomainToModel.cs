@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SalesReach.Application.Models;
-using SalesReach.Application.ViewModels;
 using SalesReach.Domain.Entities;
 using SalesReach.Domain.Enums.Extensions;
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SalesReach.Application.Models;
+using SalesReach.Application.Models.RequestModels;
 using SalesReach.Application.Services.Interfaces;
 using SalesReach.Domain.Entities;
 using SalesReach.Domain.Repositories;
@@ -40,7 +41,7 @@ namespace SalesReach.Application.Services
             return await _documentoRepository.AtualizarAsync(documento);
         }
 
-        public async Task<int> InserirAsync(DocumentoModel documentoModel)
+        public async Task<int> InserirAsync(DocumentoRequestModel documentoModel)
         {
             var documento = new Documento();
 

@@ -2,14 +2,9 @@
 using SalesReach.Application.Models;
 using SalesReach.Application.Models.RequestModels;
 using SalesReach.Application.Services.Interfaces;
-using SalesReach.Application.ViewModels;
+using SalesReach.Application.ViewModels.ClienteViewModels;
 using SalesReach.Domain.Entities;
 using SalesReach.Domain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SalesReach.Application.Services
 {

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using SalesReach.Application.Models;
-using SalesReach.Application.Services;
+using SalesReach.Application.Models.RequestModels;
 using SalesReach.Application.Services.Interfaces;
 using SalesReach.Interface.Attributes;
 using SalesReach.Interface.Controllers.Shared;
@@ -14,10 +14,12 @@ namespace SalesReach.Interface.Controllers
     {
         private readonly IPessoaContatoService _pessoaContatoService;
         private readonly IValidator<ContatoModel> _pessoaContatoValidator;
-        public PessoaContatoController(IPessoaContatoService pessoaContatoService, IValidator<ContatoModel> pessoaContatoValidator)
+        private readonly IValidator<ContatoRequestModel> _contatoRequestValidator;
+        public PessoaContatoController(IPessoaContatoService pessoaContatoService, IValidator<ContatoModel> pessoaContatoValidator, IValidator<ContatoRequestModel> contatoRequestValidator)
         {
             _pessoaContatoService = pessoaContatoService;
             _pessoaContatoValidator = pessoaContatoValidator;
+            _contatoRequestValidator = contatoRequestValidator;
         }
 
         /// <summary>
@@ -94,9 +96,9 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
         [CustomResponse(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> InserirAsync(ContatoModel contatoModel)
+        public async Task<IActionResult> InserirAsync(ContatoRequestModel contatoModel)
         {
-            var modelValidator = _pessoaContatoValidator.Validate(contatoModel);
+            var modelValidator = _contatoRequestValidator.Validate(contatoModel);
 
             if (!modelValidator.IsValid)
                 return BadRequest(modelValidator.Errors);

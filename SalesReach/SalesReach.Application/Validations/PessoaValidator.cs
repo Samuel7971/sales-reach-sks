@@ -1,11 +1,5 @@
 ﻿using FluentValidation;
 using SalesReach.Application.Models;
-using SalesReach.Application.Models.RequestModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SalesReach.Application.Validations
 {

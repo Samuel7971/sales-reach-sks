@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using SalesReach.Application.Models;
+using SalesReach.Application.Models.RequestModels;
 using SalesReach.Application.Services.Interfaces;
 using SalesReach.Interface.Attributes;
 using SalesReach.Interface.Controllers.Shared;
@@ -13,10 +14,12 @@ namespace SalesReach.Interface.Controllers
     {
         private readonly IPessoaDocumentoService _documentoService;
         private readonly IValidator<DocumentoModel> _documentoValidator;
-        public PessoaDocumentoController(IPessoaDocumentoService documentoService, IValidator<DocumentoModel> documentoValidator)
+        private readonly IValidator<DocumentoRequestModel> _documentoRequestValidator;
+        public PessoaDocumentoController(IPessoaDocumentoService documentoService, IValidator<DocumentoModel> documentoValidator, IValidator<DocumentoRequestModel> documentoRequestValidator)
         {
             _documentoService = documentoService;
             _documentoValidator = documentoValidator;
+            _documentoRequestValidator = documentoRequestValidator;
         }
 
         /// <summary>
@@ -92,9 +95,9 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
         [CustomResponse(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> InserirAsync(DocumentoModel documentoModel)
+        public async Task<IActionResult> InserirAsync(DocumentoRequestModel documentoModel)
         {
-            var modelValidator = _documentoValidator.Validate(documentoModel);
+            var modelValidator = _documentoRequestValidator.Validate(documentoModel);
 
             if (!modelValidator.IsValid)
                 return BadRequest(modelValidator.Errors);

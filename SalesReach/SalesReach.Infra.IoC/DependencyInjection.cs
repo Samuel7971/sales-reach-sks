@@ -7,6 +7,7 @@ using SalesReach.Application.Models.RequestModels;
 using SalesReach.Application.Services;
 using SalesReach.Application.Services.Interfaces;
 using SalesReach.Application.Validations;
+using SalesReach.Application.Validations.ValidationsRequests;
 using SalesReach.Domain.Repositories;
 using SalesReach.Domain.Repositories.UnitOfWork.Interface;
 using SalesReach.Infra.Data;
@@ -39,6 +40,9 @@ namespace SalesReach.Infra.IoC
             #region .: FluentValidator :.
             services.AddTransient<IValidator<ClienteRequestModel>, ClienteValidator>();
             services.AddTransient<IValidator<PessoaRequestModel>, PessoaRequestValidator>();
+            services.AddTransient<IValidator<ContatoRequestModel>, ContatoRequestValidator>();
+            services.AddTransient<IValidator<DocumentoRequestModel>, DocumentoRequestValidator>();
+            services.AddTransient<IValidator<EnderecoRequestModel>, EnderecoRequestValidator>();
             services.AddTransient<IValidator<PessoaModel>, PessoaValidator>();
             services.AddTransient<IValidator<ContatoModel>, PessoaContatoValidator>();
             services.AddTransient<IValidator<EnderecoModel>, EnderecoValidator>();

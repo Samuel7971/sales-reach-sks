@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
 using SalesReach.Application.Models;
-using SalesReach.Application.ViewModels;
 using SalesReach.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SalesReach.Domain.Enums.Extensions;
 
 namespace SalesReach.Application.Mappings
 {
@@ -20,17 +15,20 @@ namespace SalesReach.Application.Mappings
             #endregion
 
             #region .: Pessoa Mapping
-            CreateMap<PessoaModel, Pessoa>();
+            CreateMap<PessoaModel, Pessoa>()
+                .ForMember(dom => dom.PessoaTipoId, model => model.MapFrom(m => PessoaTipoExtension.IntParsePessoaTipo(m.PessoaTipo)));
             CreateMap<IEnumerable<PessoaModel>, IEnumerable<Pessoa>>();
             #endregion
 
             #region .: Documento Mapping :.
-            CreateMap<DocumentoModel, Documento>();
+            CreateMap<DocumentoModel, Documento>()
+                .ForMember(dom => dom.DocumentoTipoId, model => model.MapFrom(m => DocumentoTipoExtension.IntParseDocumentoTipo(m.DocumentoTipo)));
             CreateMap<IEnumerable<DocumentoModel>, IEnumerable<Documento>>();
             #endregion
 
             #region .: Contato Mapping :.
-            CreateMap<ContatoModel, Contato>();
+            CreateMap<ContatoModel, Contato>()
+                .ForMember(dom => dom.TelefoneTipoId, model => model.MapFrom(m => ContatoTipoExtension.IntParseTelefoneTipo(m.TelefoneTipo)));
             CreateMap<IEnumerable<ContatoModel>, IEnumerable<Contato>>();
             #endregion
 

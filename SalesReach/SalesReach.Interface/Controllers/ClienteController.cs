@@ -1,10 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.ResponseCaching;
-using SalesReach.Application.Models;
 using SalesReach.Application.Models.RequestModels;
 using SalesReach.Application.Services.Interfaces;
-using SalesReach.Application.ViewModels;
 using SalesReach.Interface.Attributes;
 using SalesReach.Interface.Controllers.Shared;
 

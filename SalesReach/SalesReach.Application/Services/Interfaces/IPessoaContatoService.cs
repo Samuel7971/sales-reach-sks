@@ -1,4 +1,5 @@
 ﻿using SalesReach.Application.Models;
+using SalesReach.Application.Models.RequestModels;
 
 namespace SalesReach.Application.Services.Interfaces
 {
@@ -10,6 +11,6 @@ namespace SalesReach.Application.Services.Interfaces
         Task<ContatoModel> BuscarPorEmailAsync(string email);
         Task<ContatoModel> BuscarPorPessoaIdAsync(int pessoaId);
         Task<int> AtualizarAsync(ContatoModel pessoaContato);
-        Task<int> InserirAsync(ContatoModel pessoaContato);
+        Task<int> InserirAsync(ContatoRequestModel pessoaContato);
     }
 }

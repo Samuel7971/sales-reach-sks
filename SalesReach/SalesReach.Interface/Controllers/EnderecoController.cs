@@ -1,10 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using SalesReach.Application.Models;
-using SalesReach.Application.Services;
+using SalesReach.Application.Models.RequestModels;
 using SalesReach.Application.Services.Interfaces;
-using SalesReach.Application.Validations;
-using SalesReach.Domain.Entities;
 using SalesReach.Interface.Attributes;
 using SalesReach.Interface.Controllers.Shared;
 
@@ -16,10 +14,12 @@ namespace SalesReach.Interface.Controllers
     {
         private readonly IEnderecoService _enderecoService;
         private readonly IValidator<EnderecoModel> _enderecoValidator;
-        public EnderecoController(IEnderecoService enderecoService, IValidator<EnderecoModel> enderecoValidator)
+        private readonly IValidator<EnderecoRequestModel> _enderecoRequestValidator;
+        public EnderecoController(IEnderecoService enderecoService, IValidator<EnderecoModel> enderecoValidator, IValidator<EnderecoRequestModel> enderecoRequestValidator)
         {
             _enderecoService = enderecoService;
             _enderecoValidator = enderecoValidator;
+            _enderecoRequestValidator = enderecoRequestValidator;
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace SalesReach.Interface.Controllers
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]
         [CustomResponse(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> InserirAsync(EnderecoModel enderecoModel)
+        public async Task<IActionResult> InserirAsync(EnderecoRequestModel enderecoModel)
         {
-            var modelValidator = _enderecoValidator.Validate(enderecoModel);
+            var modelValidator = _enderecoRequestValidator.Validate(enderecoModel);
 
             if (!modelValidator.IsValid)
                 return BadRequest(modelValidator.Errors);

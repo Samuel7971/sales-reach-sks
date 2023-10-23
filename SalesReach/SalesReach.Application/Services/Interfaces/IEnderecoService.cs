@@ -1,4 +1,5 @@
 ﻿using SalesReach.Application.Models;
+using SalesReach.Application.Models.RequestModels;
 
 namespace SalesReach.Application.Services.Interfaces
 {
@@ -10,6 +11,6 @@ namespace SalesReach.Application.Services.Interfaces
         Task<EnderecoModel> BuscarPorPessoaIdAsync(int pessoaId);
         Task<IEnumerable<EnderecoModel>> BuscarPorLogradouroAsync(string logradouro);
         Task<int> AtualizarAsync(EnderecoModel endereco);
-        Task<int> InserirAsync(EnderecoModel endereco);
+        Task<int> InserirAsync(EnderecoRequestModel endereco);
     }
 }
